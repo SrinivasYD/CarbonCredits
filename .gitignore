@@ -1,0 +1,57 @@
+# Node.js
+node_modules/
+npm-debug.log
+
+
+# Environment variables
+.env
+backend/.env
+smart-contracts/.env
+frontend/.env
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE and editor-specific files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# Build output
+dist/
+build/
+
+# Hardhat artifacts
+artifacts/
+cache/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Coverage reports
+coverage/
+
+# Other
+*.lock
+*.sqlite
+*.db
+
+# Frontend (React)
+public/static/
+*.css.map
+*.js.map
+
+# Backend (Node.js)
+logs/
+*.pid
+*.seed
