@@ -51,8 +51,8 @@ Ensure you have the following installed on your system:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/sindhusid5/carbon-credit.git
-cd carbon-credit
+git clone https://github.com/SrinivasYD/CarbonCredits.git
+cd CarbonCredits
 ```
 
 ### 2. Install Root Dependencies
