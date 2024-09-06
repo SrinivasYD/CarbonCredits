@@ -42,7 +42,7 @@ async function main() {
 
   console.log("CarbonCreditNFT deployed to:", carbonCreditNFTAddress);
 
-  // Path to the frontend/src/contracts folder
+  // Save the deployment info to a file
   const contractsDir = path.join(
     __dirname,
     "..",
@@ -52,12 +52,10 @@ async function main() {
     "contracts"
   );
 
-  // Check if the contracts folder exists, if not create it
   if (!fs.existsSync(contractsDir)) {
     fs.mkdirSync(contractsDir, { recursive: true });
   }
 
-  // Save the contract addresses in contract-addresses.json
   fs.writeFileSync(
     path.join(contractsDir, "contract-addresses.json"),
     JSON.stringify(
@@ -72,7 +70,6 @@ async function main() {
     )
   );
 
-  // Save the ABI files for each deployed contract
   const MockProjectEmissionsOracleArtifact = artifacts.readArtifactSync(
     "MockProjectEmissionsOracle"
   );
@@ -82,7 +79,6 @@ async function main() {
   const ProjectApprovalArtifact = artifacts.readArtifactSync("ProjectApproval");
   const CarbonCreditNFTArtifact = artifacts.readArtifactSync("CarbonCreditNFT");
 
-  // Write each ABI file to the contracts folder in frontend/src
   fs.writeFileSync(
     path.join(contractsDir, "MockProjectEmissionsOracle.json"),
     JSON.stringify(MockProjectEmissionsOracleArtifact, null, 2)
@@ -104,7 +100,6 @@ async function main() {
   );
 }
 
-// Handle any errors during deployment
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
