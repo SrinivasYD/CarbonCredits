@@ -8,6 +8,7 @@ import "./IAverageEmissionsOracle.sol";
 import "./IProjectEmissionsOracle.sol";
 // import "./ProjectApproval.sol"; // Import the ProjectApproval contract
 
+
 /**
  * @title CarbonCreditNFT
  * @dev An ERC721 token that represents carbon credits. Tokens are minted based on CO2 reduction calculations.
