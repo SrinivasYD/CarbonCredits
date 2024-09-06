@@ -9,6 +9,11 @@ backend/.env
 smart-contracts/.env
 frontend/.env
 
+# Environment variables
+.env
+.env.local
+.env.*.local
+
 # Logs
 *.log
 
