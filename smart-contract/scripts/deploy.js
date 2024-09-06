@@ -12,7 +12,7 @@ async function main() {
 
   console.log("MockProjectEmissionsOracle deployed to:", mockOracleAddress);
 
-  // Deploy MockAverageEmissionsOracle (assuming you have this contract)
+  // Deploy MockAverageEmissionsOracle
   const MockAverageEmissionsOracle = await ethers.getContractFactory(
     "MockAverageEmissionsOracle"
   );
@@ -22,11 +22,20 @@ async function main() {
 
   console.log("MockAverageEmissionsOracle deployed to:", mockAvgOracleAddress);
 
-  // Deploy CarbonCreditNFT using the deployed Oracle addresses
+  // Deploy ProjectApproval contract
+  const ProjectApproval = await ethers.getContractFactory("ProjectApproval");
+  const projectApproval = await ProjectApproval.deploy();
+  await projectApproval.waitForDeployment();
+  const projectApprovalAddress = await projectApproval.getAddress();
+
+  console.log("ProjectApproval deployed to:", projectApprovalAddress);
+
+  // Deploy CarbonCreditNFT using the deployed Oracle addresses and ProjectApproval address
   const CarbonCreditNFT = await ethers.getContractFactory("CarbonCreditNFT");
   const carbonCreditNFT = await CarbonCreditNFT.deploy(
     mockAvgOracleAddress, // Pass MockAverageEmissionsOracle address
-    mockOracleAddress // Pass MockProjectEmissionsOracle address
+    mockOracleAddress, // Pass MockProjectEmissionsOracle address
+    projectApprovalAddress // Pass ProjectApproval address
   );
   await carbonCreditNFT.waitForDeployment();
   const carbonCreditNFTAddress = await carbonCreditNFT.getAddress();
@@ -34,7 +43,6 @@ async function main() {
   console.log("CarbonCreditNFT deployed to:", carbonCreditNFTAddress);
 
   // Save the deployment info to a file
-  // Correct path for the contracts directory
   const contractsDir = path.join(
     __dirname,
     "..",
@@ -45,16 +53,17 @@ async function main() {
   );
 
   if (!fs.existsSync(contractsDir)) {
-    fs.mkdirSync(contractsDir, { recursive: true }); // Create the directory recursively if it doesn't exist
+    fs.mkdirSync(contractsDir, { recursive: true });
   }
 
   fs.writeFileSync(
     path.join(contractsDir, "contract-addresses.json"),
     JSON.stringify(
       {
-        MockProjectEmissionsOracle: mockProjectEmissionsOracle.target,
-        MockAverageEmissionsOracle: mockAverageEmissionsOracle.target,
-        CarbonCreditNFT: carbonCreditNFT.target,
+        MockProjectEmissionsOracle: mockOracleAddress,
+        MockAverageEmissionsOracle: mockAvgOracleAddress,
+        ProjectApproval: projectApprovalAddress,
+        CarbonCreditNFT: carbonCreditNFTAddress,
       },
       undefined,
       2
@@ -67,6 +76,7 @@ async function main() {
   const MockAverageEmissionsOracleArtifact = artifacts.readArtifactSync(
     "MockAverageEmissionsOracle"
   );
+  const ProjectApprovalArtifact = artifacts.readArtifactSync("ProjectApproval");
   const CarbonCreditNFTArtifact = artifacts.readArtifactSync("CarbonCreditNFT");
 
   fs.writeFileSync(
@@ -77,6 +87,11 @@ async function main() {
   fs.writeFileSync(
     path.join(contractsDir, "MockAverageEmissionsOracle.json"),
     JSON.stringify(MockAverageEmissionsOracleArtifact, null, 2)
+  );
+
+  fs.writeFileSync(
+    path.join(contractsDir, "ProjectApproval.json"),
+    JSON.stringify(ProjectApprovalArtifact, null, 2)
   );
 
   fs.writeFileSync(
