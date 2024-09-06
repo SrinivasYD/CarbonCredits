@@ -6,22 +6,21 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./IAverageEmissionsOracle.sol";
 import "./IProjectEmissionsOracle.sol";
-// import "./ProjectApproval.sol"; // Import the ProjectApproval contract
-
+import "./ProjectApproval.sol";
 
 /**
  * @title CarbonCreditNFT
- * @dev An ERC721 token that represents carbon credits. Tokens are minted based on CO2 reduction calculations.
+ * @dev ERC721 token representing carbon credits. Tokens are minted based on CO2 reduction data.
  */
 contract CarbonCreditNFT is ERC721, Pausable, Ownable(msg.sender) {
     uint256 public tokenCounter;
     IAverageEmissionsOracle public averageEmissionsOracle;
     IProjectEmissionsOracle public projectEmissionsOracle;
-    ProjectApproval public projectApproval; // Reference to the ProjectApproval contract
+    ProjectApproval public projectApproval;
 
     struct Project {
         address owner;
-        bytes32 dataHash; // Store data hash as bytes32
+        bytes32 dataHash;
         uint256 lastMintedTimestamp;
     }
 
@@ -57,21 +56,19 @@ contract CarbonCreditNFT is ERC721, Pausable, Ownable(msg.sender) {
         tokenCounter = 0;
         averageEmissionsOracle = IAverageEmissionsOracle(_averageEmissionsOracle);
         projectEmissionsOracle = IProjectEmissionsOracle(_projectEmissionsOracle);
-        projectApproval = ProjectApproval(_projectApproval); // Initialize the ProjectApproval contract
+        projectApproval = ProjectApproval(_projectApproval);
     }
 
     /**
      * @notice Registers a new project with the specified data hash.
-     * @dev This function registers a new project and emits a ProjectRegistered event.
-     *      It also interacts with the project emissions oracle to register the project.
      * @param dataHash The hash of the off-chain data related to the project.
      */
     function registerProject(bytes32 dataHash) public whenNotPaused {
         require(dataHash != bytes32(0), "Data hash must be provided");
-        require(projects[msg.sender].owner == address(0), "Project already registered for this wallet");
+        require(projects[msg.sender].owner == address(0), "Project already registered");
 
-        // Check if the hash is valid in the ProjectApproval contract
-        require(projectApproval.isValidProjectHash(msg.sender, dataHash), "Invalid project hash or project not yet approved");
+        // Check if the project hash is valid and not revoked
+        require(projectApproval.isValidProjectHash(msg.sender, dataHash), "Invalid or revoked project hash");
 
         projects[msg.sender] = Project({
             owner: msg.sender,
@@ -85,30 +82,27 @@ contract CarbonCreditNFT is ERC721, Pausable, Ownable(msg.sender) {
 
     /**
      * @notice Mints carbon credit tokens for a given project.
-     * @dev This function mints NFTs based on the CO2 reduction calculations. It requires oracle data to be up-to-date.
      * @param recipient The address receiving the minted tokens.
      */
     function mintCarbonCredit(address recipient) public whenNotPaused {
         Project storage project = projects[msg.sender];
         require(project.owner == msg.sender, "Only the project owner can mint NFTs");
 
+        // Ensure minting is only allowed after a certain delay (30 seconds for testing)
         uint256 currentTime = block.timestamp;
-        if (project.lastMintedTimestamp != 0) {
-            // Reduce delay time to 30 seconds for testing purposes
-            require(currentTime >= project.lastMintedTimestamp + 30 seconds, "NFTs can only be minted every 30 seconds");
-        }
+        require(currentTime >= project.lastMintedTimestamp + 30 seconds, "Minting delay not met");
 
         uint256 energyProduced = projectEmissionsOracle.getEnergyProduced(msg.sender);
         uint256 projectEmissionsData = projectEmissionsOracle.getProjectEmissionsData(msg.sender);
         uint256 averageEmissionsFactor = averageEmissionsOracle.getAverageEmissionsFactor();
 
         require(energyProduced > 0, "Energy produced must be greater than zero");
-        require(projectEmissionsData < averageEmissionsFactor, "Project emissions are too high!");
-        require(averageEmissionsFactor > 0, "The average emissions factor is not updated by the oracle!");
+        require(projectEmissionsData < averageEmissionsFactor, "Project emissions too high");
+        require(averageEmissionsFactor > 0, "Average emissions factor not updated");
 
         uint256 co2Reduction = calculateCO2Reduction(energyProduced, averageEmissionsFactor, projectEmissionsData);
         uint256 numberOfTokens = co2Reduction / 1000000; // 1 token per tonne of CO2
-        require(numberOfTokens > 0, "No sufficient CO2 reduction for minting NFTs");
+        require(numberOfTokens > 0, "Insufficient CO2 reduction for minting");
 
         project.lastMintedTimestamp = currentTime;
 
@@ -118,7 +112,6 @@ contract CarbonCreditNFT is ERC721, Pausable, Ownable(msg.sender) {
             tokenCounter++;
         }
 
-        // Calculate and update remaining energy produced
         uint256 remainingCO2Reduction = co2Reduction % 1000000;
         uint256 remainingEnergyProduced = remainingCO2Reduction / (averageEmissionsFactor - projectEmissionsData);
 
@@ -128,8 +121,7 @@ contract CarbonCreditNFT is ERC721, Pausable, Ownable(msg.sender) {
     }
 
     /**
-     * @notice Calculates the CO2 reduction based on energy produced and emissions data.
-     * @dev This is an internal function used to compute CO2 reductions for minting NFTs.
+     * @dev Internal function to calculate CO2 reduction.
      * @param energyProduced The amount of energy produced by the project.
      * @param averageEmissionsFactor The average emissions factor from the oracle.
      * @param projectEmissionsData The emissions data for the project.
@@ -162,7 +154,7 @@ contract CarbonCreditNFT is ERC721, Pausable, Ownable(msg.sender) {
 
     /**
      * @notice Helper function to check if a project is registered.
-     * @param _owner The address of the project owner to check.
+     * @param _owner The address of the project owner.
      * @return True if the project is registered, false otherwise.
      */
     function isProjectRegistered(address _owner) public view returns (bool) {
