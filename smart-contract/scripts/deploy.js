@@ -12,7 +12,7 @@ async function main() {
 
   console.log("MockProjectEmissionsOracle deployed to:", mockOracleAddress);
 
-  // Deploy MockAverageEmissionsOracle (assuming you have this contract)
+  // Deploy MockAverageEmissionsOracle
   const MockAverageEmissionsOracle = await ethers.getContractFactory(
     "MockAverageEmissionsOracle"
   );
@@ -22,19 +22,27 @@ async function main() {
 
   console.log("MockAverageEmissionsOracle deployed to:", mockAvgOracleAddress);
 
-  // Deploy CarbonCreditNFT using the deployed Oracle addresses
+  // Deploy ProjectApproval contract
+  const ProjectApproval = await ethers.getContractFactory("ProjectApproval");
+  const projectApproval = await ProjectApproval.deploy();
+  await projectApproval.waitForDeployment();
+  const projectApprovalAddress = await projectApproval.getAddress();
+
+  console.log("ProjectApproval deployed to:", projectApprovalAddress);
+
+  // Deploy CarbonCreditNFT using the deployed Oracle addresses and ProjectApproval address
   const CarbonCreditNFT = await ethers.getContractFactory("CarbonCreditNFT");
   const carbonCreditNFT = await CarbonCreditNFT.deploy(
     mockAvgOracleAddress, // Pass MockAverageEmissionsOracle address
-    mockOracleAddress // Pass MockProjectEmissionsOracle address
+    mockOracleAddress, // Pass MockProjectEmissionsOracle address
+    projectApprovalAddress // Pass ProjectApproval address
   );
   await carbonCreditNFT.waitForDeployment();
   const carbonCreditNFTAddress = await carbonCreditNFT.getAddress();
 
   console.log("CarbonCreditNFT deployed to:", carbonCreditNFTAddress);
 
-  // Save the deployment info to a file
-  // Correct path for the contracts directory
+  // Path to the frontend/src/contracts folder
   const contractsDir = path.join(
     __dirname,
     "..",
@@ -44,31 +52,37 @@ async function main() {
     "contracts"
   );
 
+  // Check if the contracts folder exists, if not create it
   if (!fs.existsSync(contractsDir)) {
-    fs.mkdirSync(contractsDir, { recursive: true }); // Create the directory recursively if it doesn't exist
+    fs.mkdirSync(contractsDir, { recursive: true });
   }
 
+  // Save the contract addresses in contract-addresses.json
   fs.writeFileSync(
     path.join(contractsDir, "contract-addresses.json"),
     JSON.stringify(
       {
-        MockProjectEmissionsOracle: mockProjectEmissionsOracle.target,
-        MockAverageEmissionsOracle: mockAverageEmissionsOracle.target,
-        CarbonCreditNFT: carbonCreditNFT.target,
+        MockProjectEmissionsOracle: mockOracleAddress,
+        MockAverageEmissionsOracle: mockAvgOracleAddress,
+        ProjectApproval: projectApprovalAddress,
+        CarbonCreditNFT: carbonCreditNFTAddress,
       },
       undefined,
       2
     )
   );
 
+  // Save the ABI files for each deployed contract
   const MockProjectEmissionsOracleArtifact = artifacts.readArtifactSync(
     "MockProjectEmissionsOracle"
   );
   const MockAverageEmissionsOracleArtifact = artifacts.readArtifactSync(
     "MockAverageEmissionsOracle"
   );
+  const ProjectApprovalArtifact = artifacts.readArtifactSync("ProjectApproval");
   const CarbonCreditNFTArtifact = artifacts.readArtifactSync("CarbonCreditNFT");
 
+  // Write each ABI file to the contracts folder in frontend/src
   fs.writeFileSync(
     path.join(contractsDir, "MockProjectEmissionsOracle.json"),
     JSON.stringify(MockProjectEmissionsOracleArtifact, null, 2)
@@ -80,11 +94,17 @@ async function main() {
   );
 
   fs.writeFileSync(
+    path.join(contractsDir, "ProjectApproval.json"),
+    JSON.stringify(ProjectApprovalArtifact, null, 2)
+  );
+
+  fs.writeFileSync(
     path.join(contractsDir, "CarbonCreditNFT.json"),
     JSON.stringify(CarbonCreditNFTArtifact, null, 2)
   );
 }
 
+// Handle any errors during deployment
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
