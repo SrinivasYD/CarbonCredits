@@ -1,9 +1,13 @@
-const mongoose = require('mongoose')
+// backend/src/models/project.js
+const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
-  address: { type: String, required: true },
-  energyProduced: { type: Number, default: 0 },
-  emissions: { type: Number, default: 0 }
-})
+  owner: String,
+  projectDetailsHash: String,
+  certificateHash: String,
+  approvalHash: String,
+  isApproved: Boolean,
+  isRevoked: Boolean,
+});
 
-module.exports = mongoose.model('Project', projectSchema)
+module.exports = mongoose.model('Project', projectSchema);
