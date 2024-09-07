@@ -1,4 +1,3 @@
-
 import globals from 'globals'
 import path from 'path'
 import { fileURLToPath } from 'url'
