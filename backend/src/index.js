@@ -1,13 +1,20 @@
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 3000
-require('./config/db') // Connect to MongoDB
+// backend/src/index.js
+const express = require("express");
+const app = express();
+const port = 5000;
+require("./config/db"); // Connect to MongoDB
 
-const projectEmission = require('./routes/projectRoutes')
-const emission = require('./routes/emissions')
-app.use(express.json())
+const {
+  fetchAndSyncEvents,
+  setupEventListeners,
+} = require("./controllers/blockchainController");
 
-app.use('/api/carbon-credits', projectEmission, emission)
+app.use(express.json());
+
+// Sync blockchain data and set up event listeners
+fetchAndSyncEvents();
+setupEventListeners();
+
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`)
-})
+  console.log(`Server running on port ${port}`);
+});
