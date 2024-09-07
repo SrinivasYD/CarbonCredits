@@ -1,0 +1,99 @@
+/* Gold Headings */
+.gold-heading {
+  color: #ffcc00;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Slight shadow for readability */
+  position: relative;
+  z-index: 1; /* Ensure heading is above background image */
+  padding: 10px 0; /* Add some padding to make the heading stand out */
+}
+
+/* Normal Table Without Glow */
+.glowing-table {
+  background-color: transparent; /* No background for the table */
+  color: white;
+  border-collapse: collapse;
+  border-spacing: 0;
+  position: relative;
+  z-index: 1; /* Ensure table is above the background */
+}
+
+.glowing-table thead {
+  background-color: rgba(
+    255,
+    204,
+    0,
+    0.8
+  ); /* Brighter table header with #ffcc00 */
+}
+
+.glowing-table th,
+.glowing-table td {
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Lighter borders */
+}
+
+.glowing-table tbody tr:hover {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Hover effect to enhance readability */
+}
+
+/* Container Styling */
+.container {
+  background-color: transparent; /* No background color for the container */
+  padding: 20px;
+  position: relative;
+  z-index: 1; /* Ensure the container is above the background */
+}
+
+/* Button Styling - Reverting to Default Blue Bootstrap Button */
+.custom-button {
+  background-color: #007bff; /* Default blue for React Bootstrap */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Optional: Page-Specific Styles */
+
+/* Approve Page Specific Styling */
+.approve-page .glowing-table {
+  border-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* Slightly different border for approve page */
+}
+
+/* Register Page Specific Styling */
+.register-page .glowing-table {
+  border-color: rgba(255, 255, 255, 0.3); /* Default border for register page */
+}
+
+/* Form Control Styling for Register Page */
+.form-control {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.6
+  ); /* Transparent dark background for inputs */
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+}
+
+/* Bold Form Labels */
+.form-label {
+  font-weight: bold; /* Bold form labels */
+  color: white; /* Ensure white text for readability */
+}
