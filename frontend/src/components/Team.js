@@ -1,21 +1,37 @@
 import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faRocket, faLightbulb, faTrophy } from '@fortawesome/free-solid-svg-icons';
 
 const Team = () => {
   return (
     <section className="team">
-      <h2>Meet the Team</h2>
+      <h2>Meet Our Experts</h2>
+
       <div className="team-members">
         <div className="member">
-          <h3>John Doe</h3>
-          <p>Blockchain Expert</p>
+          <h3>Pradeep Reddy</h3>
+          <p>
+            Contributors <FontAwesomeIcon icon={faStar} />
+          </p>
         </div>
         <div className="member">
-          <h3>Jane Smith</h3>
-          <p>Environmental Scientist</p>
+          <h3>Durga Srinivas</h3>
+          <p>
+            Contributors <FontAwesomeIcon icon={faRocket} />
+          </p>
         </div>
         <div className="member">
-          <h3>Alex Johnson</h3>
-          <p>Project Manager</p>
+          <h3>Sindhuja</h3>
+          <p>
+            Contributors <FontAwesomeIcon icon={faLightbulb} />
+          </p>
+        </div>
+
+        <div className="member">
+          <h3>Dimple Sharma</h3>
+          <p>
+            Contributors <FontAwesomeIcon icon={faTrophy} />
+          </p>
         </div>
       </div>
     </section>

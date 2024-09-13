@@ -4,8 +4,11 @@ const Hero = () => {
   return (
     <section className="hero">
       <div className="hero-content">
-        <h1>Carbon Credit Project</h1>
+        <h1>Carbon Credit NFT Marketplace</h1>
         <p>Building a sustainable future through blockchain technology.</p>
+        <a href="/nft-marketplace" className="explore-button">
+          Explore NFT Marketplace
+        </a>
       </div>
     </section>
   );

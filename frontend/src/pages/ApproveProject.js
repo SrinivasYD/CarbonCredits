@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Button, Container, Table, Alert } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-import "../styles/regApprovePage.css";
 
 const ApproveProject = ({ account, projectApproval }) => {
   const [submittedProjects, setSubmittedProjects] = useState([]);
   const [approvedProjects, setApprovedProjects] = useState([]);
-  const [revokedProjects, setRevokedProjects] = useState([]);
   const [approverAddress, setApproverAddress] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // For tracking loading state
 
   useEffect(() => {
     if (projectApproval) {
       fetchApproverAddress();
-      fetchProjects(); // Fetch both submitted and approved projects together
-      fetchRevokedProjects();
+      fetchSubmittedProjects();
+      fetchApprovedProjects();
     }
   }, [projectApproval]);
 
@@ -28,8 +25,7 @@ const ApproveProject = ({ account, projectApproval }) => {
     }
   };
 
-  // New function to fetch both submitted and approved projects
-  const fetchProjects = async () => {
+  const fetchSubmittedProjects = async () => {
     try {
       const events = await projectApproval.getPastEvents("ProjectSubmitted", {
         fromBlock: 0,
@@ -41,7 +37,6 @@ const ApproveProject = ({ account, projectApproval }) => {
         projectDetailsHash: event.returnValues.projectDetailsHash,
         certificateHash: event.returnValues.certificateHash,
         isApproved: false,
-        isRevoked: false,
       }));
 
       const projectsWithStatus = await Promise.all(
@@ -50,106 +45,58 @@ const ApproveProject = ({ account, projectApproval }) => {
             .getProject(project.owner)
             .call();
           project.isApproved = projectData[2];
-          project.isRevoked = await projectApproval.methods
-            .isProjectRevoked(project.owner)
-            .call();
           return project;
         })
       );
 
       setSubmittedProjects(projectsWithStatus);
-
-      // After setting the submitted projects, fetch the approved ones
-      const approvedProjects = await Promise.all(
-        projectsWithStatus
-          .filter((project) => project.isApproved && !project.isRevoked)
-          .map(async (project) => {
-            const approvalHash = await projectApproval.methods
-              .approvedProjects(project.owner)
-              .call();
-            return {
-              owner: project.owner,
-              projectDetailsHash: project.projectDetailsHash,
-              certificateHash: project.certificateHash,
-              approvalHash,
-              isRevoked: project.isRevoked,
-            };
-          })
-      );
-
-      setApprovedProjects(approvedProjects);
     } catch (error) {
-      toast.error("Error fetching projects.");
-      console.error("Error fetching projects:", error);
+      toast.error("Error fetching submitted projects.");
+      console.error("Error fetching submitted projects:", error);
     }
   };
 
-  const fetchRevokedProjects = async () => {
+  const fetchApprovedProjects = async () => {
     try {
-      const events = await projectApproval.getPastEvents("ProjectRevoked", {
+      const events = await projectApproval.getPastEvents("ProjectApproved", {
         fromBlock: 0,
         toBlock: "latest",
       });
 
-      const revokedProjects = events.map((event) => ({
+      const approvedProjects = events.map((event) => ({
         owner: event.returnValues.owner,
+        approvalHash: event.returnValues.approvalHash,
       }));
 
-      setRevokedProjects(revokedProjects);
+      setApprovedProjects(approvedProjects);
     } catch (error) {
-      toast.error("Error fetching revoked projects.");
-      console.error("Error fetching revoked projects:", error);
+      toast.error("Error fetching approved projects.");
+      console.error("Error fetching approved projects:", error);
     }
   };
 
   const handleApprove = async (owner) => {
     try {
-      setIsLoading(true); // Set loading state to true
       await projectApproval.methods
         .approveProject(owner)
         .send({ from: account });
       toast.success(`Project approved successfully for ${owner}`);
-      // Re-fetch projects after approval
-      await fetchProjects();
+      fetchSubmittedProjects();
+      fetchApprovedProjects();
     } catch (error) {
       toast.error("Failed to approve project.");
       console.error("Error approving project:", error);
-    } finally {
-      setIsLoading(false); // Set loading state back to false
-    }
-  };
-
-  const handleRevoke = async (owner) => {
-    try {
-      setIsLoading(true); // Set loading state to true
-      await projectApproval.methods
-        .revokeProject(owner)
-        .send({ from: account });
-      toast.success(`Project revoked successfully for ${owner}`);
-      // Re-fetch projects after revocation
-      await fetchProjects();
-    } catch (error) {
-      toast.error("Failed to revoke project.");
-      console.error("Error revoking project:", error);
-    } finally {
-      setIsLoading(false); // Set loading state back to false
     }
   };
 
   return (
     <Container className="mt-5">
       <ToastContainer />
-      <h2 className="gold-heading">Approve or Revoke Projects</h2>
+      <h2>Approve Projects</h2>
       {account && account.toLowerCase() === approverAddress ? (
         <>
           {submittedProjects.length > 0 ? (
-            <Table
-              striped
-              bordered
-              hover
-              responsive
-              className="glowing-table mt-4"
-            >
+            <Table striped bordered hover responsive className="mt-4">
               <thead>
                 <tr>
                   <th>Owner</th>
@@ -165,31 +112,14 @@ const ApproveProject = ({ account, projectApproval }) => {
                     <td>{project.owner}</td>
                     <td>{project.projectDetailsHash}</td>
                     <td>{project.certificateHash}</td>
-                    <td>
-                      {project.isApproved
-                        ? project.isRevoked
-                          ? "Revoked"
-                          : "Approved"
-                        : "Pending"}
-                    </td>
+                    <td>{project.isApproved ? "Approved" : "Pending"}</td>
                     <td>
                       {!project.isApproved && (
                         <Button
-                          className="custom-button"
+                          variant="success"
                           onClick={() => handleApprove(project.owner)}
-                          disabled={isLoading} // Disable button while loading
                         >
-                          {isLoading ? "Processing..." : "Approve"}
-                        </Button>
-                      )}
-                      {project.isApproved && !project.isRevoked && (
-                        <Button
-                          className="custom-button"
-                          variant="danger"
-                          onClick={() => handleRevoke(project.owner)}
-                          disabled={isLoading} // Disable button while loading
-                        >
-                          {isLoading ? "Processing..." : "Revoke"}
+                          Approve
                         </Button>
                       )}
                     </td>
@@ -203,19 +133,11 @@ const ApproveProject = ({ account, projectApproval }) => {
 
           {approvedProjects.length > 0 && (
             <div className="mt-5">
-              <h3 className="gold-heading">Approved Projects</h3>
-              <Table
-                striped
-                bordered
-                hover
-                responsive
-                className="glowing-table"
-              >
+              <h3>Approved Projects</h3>
+              <Table striped bordered hover responsive>
                 <thead>
                   <tr>
                     <th>Owner</th>
-                    <th>Project Details Hash</th>
-                    <th>Certificate Hash</th>
                     <th>Approval Hash</th>
                   </tr>
                 </thead>
@@ -223,8 +145,6 @@ const ApproveProject = ({ account, projectApproval }) => {
                   {approvedProjects.map((project, index) => (
                     <tr key={index}>
                       <td>{project.owner}</td>
-                      <td>{project.projectDetailsHash}</td>
-                      <td>{project.certificateHash}</td>
                       <td>{project.approvalHash}</td>
                     </tr>
                   ))}
@@ -235,7 +155,7 @@ const ApproveProject = ({ account, projectApproval }) => {
         </>
       ) : (
         <Alert variant="danger">
-          You are not authorized to approve or revoke projects.
+          You are not authorized to approve projects.
         </Alert>
       )}
     </Container>

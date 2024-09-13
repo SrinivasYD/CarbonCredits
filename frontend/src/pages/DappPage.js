@@ -20,7 +20,9 @@ const DappPage = ({
   const [nftDetails, setNftDetails] = useState(null);
 
   useEffect(() => {
-    fetchData();
+    if (carbonCreditNFT) {
+      fetchData();
+    }
   }, [
     account,
     carbonCreditNFT,
@@ -45,7 +47,7 @@ const DappPage = ({
         const isRegistered = await carbonCreditNFT.methods
           .isProjectRegistered(account)
           .call();
-        setProjectRegistered(isRegistered);
+        setProjectRegistered(isRegistered); // This will update the state and trigger re-render
 
         if (isRegistered) {
           const energyProduced = await mockProjectEmissionsOracle.methods
@@ -113,13 +115,15 @@ const DappPage = ({
   };
 
   const handleRegisterProject = async () => {
-    if (dataHash.length !== 64) {
-      alert("Data hash must be a 64-character hex string");
+    if (!/^0x[a-fA-F0-9]{64}$/.test(dataHash)) {
+      alert(
+        "Data hash must be a valid 64-character hex string prefixed with 0x"
+      );
       return;
     }
 
     try {
-      console.log("Registering project...");
+      console.log("Registering project with dataHash:", dataHash);
       await carbonCreditNFT.methods
         .registerProject(dataHash)
         .send({ from: account });

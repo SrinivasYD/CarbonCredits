@@ -3,14 +3,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Roboto", sans-serif; /* Modern, clean font */
+  font-family: "Roboto", sans-serif;
+  /* Modern, clean font */
 }
 
 body {
-  background: url("../../public/carbonCreditBackgroundImage.jpg") no-repeat
-    center center fixed;
+  background: url("../../public/home4.jpg") no-repeat center center fixed;
   background-size: cover;
-  color: #e0e0e0;
+  color: #e0e0e0fd;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -19,88 +19,126 @@ body {
 
 body::before {
   content: "";
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.7),
-    /* Darker at the top */ rgba(0, 0, 0, 0.3) /* Lighter towards the bottom */
-  );
-  pointer-events: none;
-  z-index: 0;
+  background-color: rgba(0, 0, 0, 0.507);
+  /* 50% opacity black overlay */
+  z-index: -1;
+  /* Keep the overlay behind the content */
 }
 
 /* Header and Navbar */
 header {
   background-color: rgba(30, 30, 30, 0.8);
-  padding: 20px 40px; /* Added horizontal padding for a more spacious feel */
+  padding: 20px 40px;
+  /* Added horizontal padding for a more spacious feel */
   margin-top: 20px;
   z-index: 10;
   position: relative;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Slight shadow for depth */
+}
+ /* General body styling */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
+/* Navbar container */
 nav {
+  width: 100%;
+  height: 80px; /* Height of the navbar */
+  background-color: #000000; /* Background color of the navbar */
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  z-index: 20;
+  align-items: center; /* Vertically center the content */
+  justify-content: space-between; /* Distribute items across the navbar */
+  padding: 0 20px; /* Horizontal padding */
+  box-sizing: border-box; /* Include padding in width */
 }
 
+/* Logo container */
 .logo {
-  font-size: 2em;
-  font-weight: bold;
-  color: #ffffff; /* Brighter white for the logo */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Slight text shadow */
+  color: #ffffff; /* Logo text color */
+  font-size: 24px; /* Font size for the logo */
+  font-weight: bold; /* Font weight for the logo */
+  cursor: pointer; /* Pointer cursor for clickable logo */
 }
 
+/* Navigation links container */
 .nav-links {
-  list-style: none;
-  display: flex;
+  list-style: none; /* Remove default list styling */
+  margin: 0;
+  padding: 0;
+  display: flex; /* Arrange links in a row */
 }
 
+/* Navigation link styling */
 .nav-links li {
-  margin: 0 20px;
+  margin: 0 15px; /* Space between links */
 }
 
 .nav-links a {
-  color: #ffffff; /* Brighter white */
-  text-decoration: none;
-  font-size: 1.2em;
-  font-weight: 400;
-  transition: color 0.3s, transform 0.3s;
-  position: relative;
-  z-index: 20;
+  color: #ffffff; /* Link color */
+  text-decoration: none; /* Remove underline */
+  font-size: 18px; /* Font size for links */
+  transition: color 0.3s ease; /* Smooth color transition on hover */
 }
 
 .nav-links a:hover {
-  color: #ffcc00; /* Gold color on hover */
-  transform: translateY(-2px); /* Slight lift on hover */
+  color: #02ab08; /* Change color on hover */
 }
-
+ 
+ 
 .connect-wallet {
-  background-color: #76ff03;
-  color: #121212;
-  padding: 12px 24px;
+  background-color: #02ab08;
+  /* MetaMask's signature color */
+  color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 1.2em;
-  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .connect-wallet:hover {
-  background-color: #64dd17;
-  transform: translateY(-2px);
-  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
-  color: #ffffff; /* Ensure text color is white on hover */
+  background-color: #2df53b;
+  /* Darker shade on hover */
 }
+
+connect-wallet {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+/* Responsive design for smaller screens */
+@media only screen and (max-width: 900px) {
+  .nav-links {
+    display: none; /* Hide links on smaller screens */
+  }
+
+  .connect-wallet {
+    display: none; /* Hide wallet button on smaller screens */
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .logo {
+    font-size: 20px; /* Adjust logo size for smaller screens */
+  }
+
+  .connect-wallet {
+    display: block; /* Show wallet button on smaller screens */
+    font-size: 14px; /* Adjust font size */
+    padding: 8px 16px; /* Adjust padding */
+  }
+}
+
 
 /* Main Content */
 main {
@@ -111,27 +149,29 @@ main {
 
 .hero {
   text-align: center;
-  padding: 180px 20px; /* Increased padding for a grander appearance */
+  padding: 180px 20px;
+  /* Increased padding for a grander appearance */
 }
 
 .hero-content {
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.7
-  ); /* Darker background for text visibility */
-  padding: 40px;
-  border-radius: 12px;
+  background-color: rgba(0,
+      0,
+      0,
+      0.7);
+  /* Darker background for text visibility */
+  padding: 75px;
+  border-radius: 15px;
   display: inline-block;
   animation: fadeIn 1.5s ease-out;
 }
 
 .hero h1 {
   font-size: 4em;
-  font-weight: 700; /* Bold */
+  font-weight: 500;
+  /* Bold */
   color: #76ff03;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Adds depth */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  /* Adds depth */
   margin-bottom: 20px;
 }
 
@@ -140,7 +180,20 @@ main {
   color: #f0f0f0;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
+.explore-button {
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #1b5e20; /* Adjust button color */
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
 
+.explore-button:hover {
+  background-color: #66bb6a; /* Adjust hover color */
+}
 /* About and Team Sections */
 .about,
 .team {
@@ -152,7 +205,8 @@ main {
 .team h2 {
   font-size: 2.5em;
   margin-bottom: 20px;
-  color: #ffcc00; /* Gold color for section titles */
+  color: #ffffff;
+  /* Gold color for section titles */
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -169,7 +223,8 @@ main {
 .team-members {
   display: flex;
   justify-content: space-around;
-  gap: 40px; /* Increased gap between team members */
+  gap: 40px;
+  /* Increased gap between team members */
   margin-top: 20px;
 }
 
@@ -183,13 +238,14 @@ main {
 }
 
 .member:hover {
-  transform: scale(1.05); /* Slight zoom effect on hover */
+  transform: scale(1.05);
+  /* Slight zoom effect on hover */
 }
 
 .member h3 {
   font-size: 1.3em;
   margin-bottom: 10px;
-  color: #ffcc00;
+  color: #02ab08;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -202,7 +258,8 @@ footer {
   color: #9e9e9e;
   position: relative;
   z-index: 1;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+  /* Slight shadow for depth */
 }
 
 /* Animations */
@@ -211,6 +268,7 @@ footer {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -219,49 +277,58 @@ footer {
 
 /* Hover effect for Hero section */
 .hero-content:hover {
-  transform: scale(1.05); /* Slight zoom effect */
+  transform: scale(1.05);
+  /* Slight zoom effect */
   transition: transform 0.3s ease-in-out;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.8
-  ); /* Slightly darker background on hover */
+  background-color: rgba(0,
+      0,
+      0,
+      0.8);
+  /* Slightly darker background on hover */
 }
 
 /* Adjusted hover effect for About section */
 .about:hover {
-  transform: scale(1.05); /* Slight zoom effect */
+  transform: scale(1.05);
+  /* Slight zoom effect */
   transition: transform 0.3s ease-in-out;
 }
 
 /* Ensure the text color remains consistent */
 .about h2 {
-  color: #ffcc00; /* Set title to gold */
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* Add text shadow */
+  color: #ffffff;
+  /* Set title to gold */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  /* Add text shadow */
   transition: text-shadow 0.3s;
 }
 
 .about p {
-  color: #ffffff; /* Keep content text color white */
+  color: #ffffff;
+  /* Keep content text color white */
 }
 
 /* Apply hover effect for About section title */
 .about h2:hover {
-  color: #ffcc00; /* Title remains gold on hover */
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* Add text shadow on hover */
+  color: #02ab08;
+  /* Title remains gold on hover */
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+  /* Add text shadow on hover */
   transition: color 0.3s, text-shadow 0.3s;
 }
 
 /* Hover effect for Team section title */
 .team:hover {
-  transform: scale(1.05); /* Slight zoom effect */
+  transform: scale(1.05);
+  /* Slight zoom effect */
   transition: transform 0.3s ease-in-out;
 }
 
 .team h2:hover {
-  color: #ffcc00; /* Change text color to gold on hover */
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* Add text shadow on hover */
+  color: #02ab08;
+  /* Change text color to gold on hover */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  /* Add text shadow on hover */
   transition: color 0.3s, text-shadow 0.3s;
 }
 
@@ -269,7 +336,8 @@ footer {
 .team-members {
   display: flex;
   justify-content: space-around;
-  gap: 40px; /* Increased gap between team members */
+  gap: 40px;
+  /* Increased gap between team members */
   margin-top: 20px;
 }
 
@@ -283,7 +351,8 @@ footer {
 }
 
 .member:hover {
-  transform: scale(1.05); /* Slight zoom effect on hover */
+  transform: scale(1.05);
+  /* Slight zoom effect on hover */
 }
 
 /* Dapp Page Styles */
@@ -291,10 +360,13 @@ footer {
   text-align: center;
   padding: 60px 20px;
   color: #ffffff;
-  background-image: url("../../public/carbonCreditBackgroundImage.jpg"); /* Add your image path here */
-  background-size: cover;
-  background-position: center;
+  background-image: url("../../public/home4.jpg"); /* Adjust the path according to where your image is */
+  background-size: cover; /* Ensure the image covers the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent image from repeating */
+  background-attachment: fixed; /* Make sure the image stays fixed during scroll */
   position: relative;
+  min-height: 100vh; /* Ensure the page takes up the full viewport height */
 }
 
 .dapp-page::before {
@@ -304,38 +376,45 @@ footer {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for text contrast */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Dark overlay for text contrast */
   z-index: 1;
 }
 
 .mint-nft {
   margin: 40px 0;
   padding: 20px;
-  border: 2px solid #76ff03; /* Green border */
+  border: 2px solid #76ff03;
+  /* Green border */
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   position: relative;
-  z-index: 2; /* Ensures sections are above the overlay */
+  z-index: 2;
+  /* Ensures sections are above the overlay */
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center the content */
+  align-items: center;
+  /* Center the content */
 }
 
 .register-project,
 .oracle-data {
   margin: 40px 0;
   padding: 20px;
-  border: 2px solid #76ff03; /* Green border */
+  border: 2px solid #76ff03;
+  /* Green border */
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   position: relative;
-  z-index: 2; /* Ensures sections are above the overlay */
+  z-index: 2;
+  /* Ensures sections are above the overlay */
 }
 
 .register-project h2,
 .mint-nft h2,
 .oracle-data h2 {
-  color: #ffcc00; /* Gold color for section titles */
+  color: #ffcc00;
+  /* Gold color for section titles */
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -385,12 +464,16 @@ button:hover {
 
 /* Styling for disconnected wallet message */
 .disconnected-message {
-  font-size: 1.5em; /* Increase font size for better visibility */
-  color: #ffcc00; /* Gold color to make the message stand out */
+  font-size: 1.5em;
+  /* Increase font size for better visibility */
+  color: #ffcc00;
+  /* Gold color to make the message stand out */
   margin-top: 20px;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  /* Text shadow for better readability */
   position: relative;
-  z-index: 2; /* Ensure it's above the background overlay */
+  z-index: 2;
+  /* Ensure it's above the background overlay */
 }
 
 @media (max-width: 768px) {
@@ -401,10 +484,14 @@ button:hover {
 
 /* Styling for panel headings */
 .panel-heading {
-  color: #ffcc00; /* Gold color */
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for better readability */
-  font-size: 2.5em; /* Increase font size for emphasis */
-  margin-bottom: 20px; /* Space below heading */
+  color: #ffcc00;
+  /* Gold color */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  /* Add text shadow for better readability */
+  font-size: 2.5em;
+  /* Increase font size for emphasis */
+  margin-bottom: 20px;
+  /* Space below heading */
 }
 
 /* Add styles for the authorize-contract and nft-details sections */
@@ -412,19 +499,23 @@ button:hover {
 .nft-details {
   margin: 40px 0;
   padding: 20px;
-  border: 2px solid #76ff03; /* Green border */
+  border: 2px solid #76ff03;
+  /* Green border */
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   position: relative;
-  z-index: 2; /* Ensures sections are above the overlay */
+  z-index: 2;
+  /* Ensures sections are above the overlay */
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center the content */
+  align-items: center;
+  /* Center the content */
 }
 
 .authorize-contract h2,
 .nft-details h2 {
-  color: #ffcc00; /* Gold color for section titles */
+  color: #ffcc00;
+  /* Gold color for section titles */
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -441,11 +532,15 @@ button:hover {
   text-align: center;
   padding: 60px 20px;
   color: #ffffff;
-  background-image: url("../../public/carbonCreditBackgroundImage.jpg"); /* Ensure your image path is correct */
-  background-size: cover;
-  background-position: center;
+  background-image: url("../../public/home4.jpg"); /* Adjust the path if needed */
+  background-size: cover; /* Make sure the image covers the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent image from repeating */
+  background-attachment: fixed; /* Keep the background fixed during scroll */
   position: relative;
+  min-height: 100vh; /* Ensure the container takes up at least the full viewport height */
 }
+
 
 .oracle-dashboard::before {
   content: "";
@@ -454,47 +549,57 @@ button:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for text contrast */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Dark overlay for text contrast */
   z-index: 1;
 }
 
 .admin-panel {
   margin: 40px 0;
   padding: 20px;
-  border: 2px solid #76ff03; /* Green border */
+  border: 2px solid #76ff03;
+  /* Green border */
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   position: relative;
-  z-index: 2; /* Ensures sections are above the overlay */
+  z-index: 2;
+  /* Ensures sections are above the overlay */
 }
 
 .trusted-source-panel {
   margin: 40px 0;
   padding: 20px;
-  border: 2px solid #76ff03; /* Green border */
+  border: 2px solid #76ff03;
+  /* Green border */
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   position: relative;
-  z-index: 2; /* Ensures sections are above the overlay */
+  z-index: 2;
+  /* Ensures sections are above the overlay */
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center the content */
+  align-items: center;
+  /* Center the content */
 }
 
 .oracle-controls {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Align inputs and button to the center */
-  width: 100%; /* Make the width consistent */
+  align-items: center;
+  /* Align inputs and button to the center */
+  width: 100%;
+  /* Make the width consistent */
 }
 
 .oracle-controls .data-input {
-  width: 60%; /* Consistent width for all input fields */
+  width: 60%;
+  /* Consistent width for all input fields */
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
   border: 1px solid #ccc;
-  text-align: center; /* Center text in input */
+  text-align: center;
+  /* Center text in input */
 }
 
 .oracle-controls .action-button {
@@ -508,8 +613,10 @@ button:hover {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 20px; /* Add space above button */
-  width: 20%; /* Match button width to input fields */
+  margin-top: 20px;
+  /* Add space above button */
+  width: 20%;
+  /* Match button width to input fields */
 }
 
 .oracle-controls .action-button:hover {
@@ -520,21 +627,29 @@ button:hover {
 }
 
 .non-trusted-message {
-  font-size: 1.5em; /* Increase font size for better visibility */
-  color: #ffcc00; /* Gold color to make the message stand out */
+  font-size: 1.5em;
+  /* Increase font size for better visibility */
+  color: #ffcc00;
+  /* Gold color to make the message stand out */
   margin-top: 20px;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  /* Text shadow for better readability */
   position: relative;
-  z-index: 2; /* Ensure it's above the background overlay */
+  z-index: 2;
+  /* Ensure it's above the background overlay */
 }
 
 .non-trusted-message {
-  font-size: 1.5em; /* Increase font size for better visibility */
-  color: #ffcc00; /* Gold color to make the message stand out */
+  font-size: 1.5em;
+  /* Increase font size for better visibility */
+  color: #ffcc00;
+  /* Gold color to make the message stand out */
   margin-top: 20px;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  /* Text shadow for better readability */
   position: relative;
-  z-index: 2; /* Ensure it's above the background overlay */
+  z-index: 2;
+  /* Ensure it's above the background overlay */
 }
 
 /* Add styles for Register and Approve pages */
@@ -542,11 +657,13 @@ button:hover {
 .approve-project {
   margin: 40px 0;
   padding: 20px;
-  border: 2px solid #76ff03; /* Green border */
+  border: 2px solid #76ff03;
+  /* Green border */
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   position: relative;
-  z-index: 2; /* Ensures sections are above the overlay */
+  z-index: 2;
+  /* Ensures sections are above the overlay */
   text-align: center;
 }
 
@@ -562,4 +679,433 @@ button:hover {
 .register-project button,
 .approve-project button {
   margin-top: 10px;
+}
+
+.project-plan,
+.carbon-calculator {
+  padding: 20px;
+
+  margin: 20px 0;
+}
+
+.project-plan ul {
+  list-style-type: none;
+}
+
+.project-plan ul ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5em;
+  }
+
+  .hero p {
+    font-size: 1.2em;
+  }
+
+  .team-members {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .member {
+    width: 100%;
+  }
+
+  .nav-links li {
+    margin: 0 10px;
+  }
+}
+
+.project-plan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.371);
+  /* Light background for contrast */
+}
+
+.chart-container {
+  position: relative;
+  width: 80%;
+  /* Or any percentage value */
+  max-width: 1000px;
+  /* Max width for larger screens */
+  height: 500px;
+  /* Set a height */
+  margin: 0 auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.chart-container:hover {
+  transform: scale(1.05);
+}
+
+.description {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  /* Smooth transitions */
+
+}
+
+.description:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  /* Light grey background on hover */
+  color: #02ab08;
+  /* Change text color on hover */
+  transform: scale(1.1);
+  /* Zoom in effect on hover */
+}
+
+.description h2 {
+  font-size: 1.8em;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.description p {
+  font-size: 1.2em;
+  line-height: 1.6em;
+  color: #f3f1f1;
+}
+
+
+.project-plan h2:hover {
+  color: #02ab08;
+  /* Change color on hover */
+  transform: scale(1.3);
+  /* Increase the zoom effect */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  /* Stronger shadow to enhance focus */
+  cursor: pointer;
+  /* Pointer to indicate it's clickable */
+} 
+ 
+.approach-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 100vh;
+  width: 100%;
+  /* Ensures full viewport width and height */
+  position: relative;
+  overflow: hidden;
+}
+
+.approach-content {
+  width: 90%;
+  max-width: 1000px;
+  background-color: rgba(255, 255, 255, 0.2); /* More transparency */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Deeper shadow */
+  text-align: center;
+  transition: transform 0.4s ease, background-color 0.4s ease;
+  backdrop-filter: blur(10px); /* Blurs the background slightly */
+}
+
+.approach-content:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.344); /* Changes transparency on hover */
+}
+
+.approach-content h2 {
+  font-size: 2.5em;
+  color: #ffffff; /* Vibrant green */
+  margin-bottom: 25px;
+  opacity: 0;
+  animation: fadeIn 1s forwards; /* Fade-in animation */
+}
+
+.approach-content p {
+  font-size: 1.3em;
+  line-height: 1.8em;
+  color: #333;
+  margin-bottom: 25px;
+  opacity: 0;
+  animation: fadeIn 1.2s forwards;
+}
+
+.approach-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, color 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 1.4s forwards;
+}
+
+.icon-item:hover {
+  transform: scale(1.15);
+}
+
+.icon-item p {
+  margin-top: 12px;
+  font-size: 1.1em;
+  color: #f9f506;
+}
+
+.icon {
+  font-size: 2.5em;
+  color: #76ff03; /* Neon green */
+}
+
+.icon-item:hover .icon {
+  color: #02ab08; /* Changes color on hover */
+}
+
+/* Keyframes for the fade-in animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* Moves elements from below */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Moves elements back to position */
+}
+}
+/* Optional background animation for a dynamic feel */
+.approach-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(2, 171, 8, 0.2), rgba(118, 255, 3, 0.2), rgba(2, 171, 8, 0.2));
+  animation: backgroundMove 10s infinite;
+}
+
+@keyframes backgroundMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.carousel-container {
+  max-width: 1150px; /* Adjust width as needed */
+  margin: 0 auto;
+}
+
+.carousel-item {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffffaa;
+}
+
+.about-carousel-content {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.about-carousel-content h2 {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-carousel-content h2 .fa-icon {
+  margin-right: 10px; /* Adjust spacing between icon and text */
+}
+
+.about-carousel-content p {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  color: #000000;
+}
+
+/* Main Container for the Carbon Credit Page */
+.carbon-page {
+  text-align: center;
+  padding: 50px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f404; /* Optional: Light background for the section */
+}
+
+/* Title Styles */
+.carbon-title {
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: #ffffff;
+}
+
+/* Grid Container for Images */
+.carbon-image-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* Adjusted gap between image cards for better spacing */
+  flex-wrap: wrap; /* Ensure wrapping on smaller screens */
+}
+
+/* Individual Image Card */
+.carbon-image-card {
+  position: relative;
+  width: 350px;
+  height: 550px;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for the cards */
+  transition: transform 0.3s ease-in-out; /* Smooth zoom effect */
+}
+
+/* Image Styling */
+.carbon-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Zoom Effect on Hover */
+.carbon-image-card:hover .carbon-image {
+  transform: scale(1.1); /* Zoom effect on hover */
+}
+
+/* Hidden Content that appears on hover */
+.carbon-card-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+  color: rgba(255, 255, 255, 0.998);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Reveal Content on Hover */
+.carbon-image-card:hover .carbon-card-content {
+  opacity: 1;
+}
+
+/* Card Content Styling */
+.carbon-card-content h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.carbon-card-content p {
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Responsive Styling */
+@media (min-width: 600px) {
+  .responsive-title {
+    font-size: 3rem;
+    font-weight: 400;
+  }
+
+  .responsive-subtitle {
+    font-size: 1rem;
+  }
+
+  .responsive-button {
+    height: 48px;
+    padding: 1.25rem;
+    font-size: 1rem;
+    letter-spacing: 0.015em;
+  }
+}
+.outer-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.split-page {
+  display: flex;
+  width: 100%;
+  max-width: 1150px; /* Adjust as needed */
+  height: 500px; /* Adjust as needed */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-half {
+  flex: 1;
+  background: url("../../public/home2.jpg") no-repeat center center;
+
+  background-size: cover;
+  /* Add any additional styles for the image */
+}
+
+.content-half {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff9e;
+  color: #020202;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content-half h1 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.content-half p {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.carbon-counter {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.carbon-counter h2 {
+  font-size: 24px;
+  color: #202020;
+}
+
+.carbon-counter p {
+  font-size: 36px;
+  font-weight: bold;
+  color: #1b5e20; /* Adjust this color for the counter text */
 }
