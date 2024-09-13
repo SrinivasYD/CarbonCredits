@@ -11,26 +11,25 @@ const Team = () => {
         <div className="member">
           <h3>Pradeep Reddy</h3>
           <p>
-            Contributors <FontAwesomeIcon icon={faStar} />
+            Full-Stack Blockchain Developers <FontAwesomeIcon icon={faStar} />
           </p>
         </div>
         <div className="member">
           <h3>Durga Srinivas</h3>
           <p>
-            Contributors <FontAwesomeIcon icon={faRocket} />
+            Full-Stack Blockchain Developers <FontAwesomeIcon icon={faRocket} />
           </p>
         </div>
         <div className="member">
           <h3>Sindhuja</h3>
           <p>
-            Contributors <FontAwesomeIcon icon={faLightbulb} />
+            Full-Stack Blockchain Developers <FontAwesomeIcon icon={faLightbulb} />
           </p>
         </div>
-
         <div className="member">
           <h3>Dimple Sharma</h3>
           <p>
-            Contributors <FontAwesomeIcon icon={faTrophy} />
+            Full-Stack Blockchain Developers <FontAwesomeIcon icon={faTrophy} />
           </p>
         </div>
       </div>
