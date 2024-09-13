@@ -4,11 +4,17 @@ import Hero from "../components/Hero";
 import About from "../components/About";
 import Team from "../components/Team";
 import Footer from "../components/Footer";
+import Approach from "../components/Approach";
+import ProjectPlan from "../components/ProjectPlan";
+import CarbonPage from "../components/CarbonPage";
 
 const HomePage = () => {
   return (
     <>
       <Hero />
+      <ProjectPlan />
+      <Approach /> 
+      <CarbonPage />
       <About />
       <Team />
       <Footer />

@@ -10,7 +10,6 @@ import {
   Table,
 } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-import "../styles/regApprovePage.css"; // Assuming you're using the same CSS file
 
 const RegisterProject = ({ account, projectApproval }) => {
   const [projectDetailsHash, setProjectDetails] = useState("");
@@ -92,9 +91,9 @@ const RegisterProject = ({ account, projectApproval }) => {
   };
 
   return (
-    <Container className="mt-5 register-page">
+    <Container className="mt-5">
       <ToastContainer />
-      <h2 className="gold-heading">Register Project</h2>
+      <h2>Register Project</h2>
       {hasSubmitted ? (
         submittedProject ? (
           <div>
@@ -104,7 +103,7 @@ const RegisterProject = ({ account, projectApproval }) => {
                   ? "Your project has been approved!"
                   : "Your project is submitted and pending approval."}
               </p>
-              <Table bordered className="styled-table mt-3">
+              <Table bordered className="mt-3">
                 <tbody>
                   <tr>
                     <td>Project Details Hash:</td>
@@ -130,12 +129,11 @@ const RegisterProject = ({ account, projectApproval }) => {
       ) : (
         <Form>
           <Form.Group as={Row} className="mb-3">
-            <Form.Label column sm={3} className="form-label">
+            <Form.Label column sm={3}>
               Project Details Hash
             </Form.Label>
             <Col sm={9}>
               <Form.Control
-                className="form-control"
                 type="text"
                 placeholder="Enter project details"
                 value={projectDetailsHash}
@@ -144,12 +142,11 @@ const RegisterProject = ({ account, projectApproval }) => {
             </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3">
-            <Form.Label column sm={3} className="form-label">
+            <Form.Label column sm={3}>
               Certificate Hash
             </Form.Label>
             <Col sm={9}>
               <Form.Control
-                className="form-control"
                 type="text"
                 placeholder="Enter certificate details"
                 value={certificateHash}
