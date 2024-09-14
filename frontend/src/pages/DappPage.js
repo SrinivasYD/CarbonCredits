@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Table } from "react-bootstrap";
 
 const DappPage = ({
   account,
@@ -15,13 +16,13 @@ const DappPage = ({
   const [dataHash, setDataHash] = useState("");
   const [oracleDataFetched, setOracleDataFetched] = useState(false);
   const [recipientAddress, setRecipientAddress] = useState(account);
-  const [authorizationStatus, setAuthorizationStatus] = useState("");
-  const [isAuthorized, setIsAuthorized] = useState(false);
   const [nftDetails, setNftDetails] = useState(null);
+  const [mintedNFTs, setMintedNFTs] = useState([]);
 
   useEffect(() => {
     if (carbonCreditNFT) {
       fetchData();
+      fetchMintedNFTs(); // Fetch past NFTs minted from blockchain events
     }
   }, [
     account,
@@ -33,7 +34,6 @@ const DappPage = ({
   const fetchData = async () => {
     await fetchOracleData();
     await fetchNFTDetails();
-    await checkAuthorization();
   };
 
   const fetchOracleData = async () => {
@@ -47,7 +47,7 @@ const DappPage = ({
         const isRegistered = await carbonCreditNFT.methods
           .isProjectRegistered(account)
           .call();
-        setProjectRegistered(isRegistered); // This will update the state and trigger re-render
+        setProjectRegistered(isRegistered);
 
         if (isRegistered) {
           const energyProduced = await mockProjectEmissionsOracle.methods
@@ -77,19 +77,6 @@ const DappPage = ({
     }
   };
 
-  const checkAuthorization = async () => {
-    if (mockProjectEmissionsOracle && account) {
-      try {
-        const isAuthorizedCaller = await mockProjectEmissionsOracle.methods
-          .authorizedCallers(carbonCreditNFT.options.address)
-          .call();
-        setIsAuthorized(isAuthorizedCaller);
-      } catch (error) {
-        console.error("Error checking contract authorization:", error);
-      }
-    }
-  };
-
   const fetchNFTDetails = async () => {
     if (carbonCreditNFT && account) {
       try {
@@ -97,13 +84,9 @@ const DappPage = ({
         if (BigInt(balance) > BigInt(0)) {
           const tokenId = BigInt(balance) - BigInt(1); // Assuming we want the latest minted NFT
           const owner = await carbonCreditNFT.methods.ownerOf(tokenId).call();
-          const tokenURI = await carbonCreditNFT.methods
-            .tokenURI(tokenId)
-            .call();
           setNftDetails({
             tokenId: tokenId.toString(), // Convert to string for display
             owner,
-            tokenURI,
           });
         } else {
           setNftDetails(null);
@@ -111,6 +94,34 @@ const DappPage = ({
       } catch (error) {
         console.error("Error fetching NFT details:", error);
       }
+    }
+  };
+
+  // Fetch the past minted NFTs from the blockchain events
+  const fetchMintedNFTs = async () => {
+    try {
+      console.log("Fetching minted NFTs from blockchain...");
+      const events = await carbonCreditNFT.getPastEvents(
+        "CarbonCreditsMinted",
+        {
+          fromBlock: 0,
+          toBlock: "latest",
+        }
+      );
+
+      const nfts = events.map((event) => ({
+        owner: event.returnValues.owner,
+        recipient: event.returnValues.recipient,
+        numberOfTokens: event.returnValues.numberOfTokens.toString(), // Convert BigInt to string
+        timestamp: new Date(
+          Number(event.returnValues.timestamp) * 1000
+        ).toLocaleString(), // Convert BigInt timestamp to number and then to Date
+      }));
+
+      setMintedNFTs(nfts); // Store the NFTs in state to display later
+      console.log("Minted NFTs fetched:", nfts);
+    } catch (error) {
+      console.error("Error fetching minted NFTs:", error);
     }
   };
 
@@ -137,48 +148,9 @@ const DappPage = ({
     }
   };
 
-  const handleAuthorizeContract = async () => {
-    if (isAuthorized) {
-      alert("Contract is already authorized.");
-      return;
-    }
-
-    try {
-      setAuthorizationStatus("Authorizing...");
-      await mockProjectEmissionsOracle.methods
-        .authorizeCaller(carbonCreditNFT.options.address)
-        .send({ from: account });
-
-      setAuthorizationStatus("Authorization successful!");
-      setIsAuthorized(true);
-      alert("CarbonCreditNFT contract authorized successfully!");
-    } catch (error) {
-      console.error("Error authorizing contract:", error);
-      setAuthorizationStatus("Authorization failed.");
-    }
-  };
-
   const handleMintNFT = async () => {
     if (!projectRegistered) {
       alert("Project is not registered!");
-      return;
-    }
-
-    if (!isAuthorized) {
-      alert("Contract is not authorized! Please authorize the contract first.");
-      return;
-    }
-
-    if (energyProduced <= BigInt(0)) {
-      alert("Insufficient energy produced to mint an NFT.");
-      return;
-    }
-
-    const co2Reduction = energyProduced * (averageEmissions - projectEmissions);
-    const numberOfTokens = co2Reduction / BigInt(1000000);
-
-    if (numberOfTokens < BigInt(1)) {
-      alert("No sufficient CO2 reduction for minting NFTs.");
       return;
     }
 
@@ -186,6 +158,7 @@ const DappPage = ({
       console.log("Minting NFT...");
       setMintingStatus("Minting...");
 
+      // Call the smart contract to mint NFTs and handle all calculations on-chain
       const mintResult = await carbonCreditNFT.methods
         .mintCarbonCredit(recipientAddress)
         .send({ from: account });
@@ -194,6 +167,7 @@ const DappPage = ({
       alert("NFT minted successfully!");
 
       fetchData(); // Fetch data again after minting
+      fetchMintedNFTs(); // Fetch updated minted NFTs after minting
     } catch (error) {
       console.error("Error minting NFT:", error);
       setMintingStatus("Minting failed.");
@@ -219,24 +193,11 @@ const DappPage = ({
             </section>
           ) : (
             <>
-              <section className="authorize-contract">
-                <h2 style={{ color: "gold" }}>
-                  Authorize CarbonCreditNFT Contract
-                </h2>
-                <p>
-                  Authorize the CarbonCreditNFT contract to update project data.
-                </p>
-                <button onClick={handleAuthorizeContract}>
-                  Authorize Contract
-                </button>
-                {authorizationStatus && <p>{authorizationStatus}</p>}
-              </section>
-
               <section className="mint-nft">
                 <h2 style={{ color: "gold" }}>Mint Your NFT</h2>
                 <p>
-                  Once your project is registered and authorized, you can mint
-                  NFTs based on your green efforts.
+                  Once your project is registered, you can mint NFTs based on
+                  your green efforts.
                 </p>
                 <input
                   type="text"
@@ -249,14 +210,40 @@ const DappPage = ({
                 {mintingStatus && <p>{mintingStatus}</p>}
               </section>
 
-              {nftDetails && (
-                <section className="nft-details">
-                  <h2 style={{ color: "gold" }}>NFT Details</h2>
-                  <p>Token ID: {nftDetails.tokenId}</p>
-                  <p>Owner: {nftDetails.owner}</p>
-                  <p>Token URI: {nftDetails.tokenURI}</p>
-                </section>
-              )}
+              {/* Minted NFTs Table */}
+              <section className="minted-nfts">
+                <h2 style={{ color: "gold" }}>Minted NFTs</h2>
+                {mintedNFTs.length > 0 ? (
+                  <Table
+                    striped
+                    bordered
+                    hover
+                    responsive
+                    className="glowing-table mt-4"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Owner</th>
+                        <th>Recipient</th>
+                        <th>Number of Tokens</th>
+                        <th>Timestamp</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {mintedNFTs.map((nft, index) => (
+                        <tr key={index}>
+                          <td>{nft.owner}</td>
+                          <td>{nft.recipient}</td>
+                          <td>{nft.numberOfTokens}</td>
+                          <td>{nft.timestamp}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                ) : (
+                  <p>No NFTs have been minted yet.</p>
+                )}
+              </section>
             </>
           )}
 
