@@ -11,6 +11,7 @@ import DappPage from "./pages/DappPage";
 import OracleDashboard from "./pages/OracleDashboard";
 import RegisterProject from "./pages/RegisterProject";
 import ApproveProject from "./pages/ApproveProject";
+import MarketplacePage from "./pages/MarketplacePage"; // Import the marketplace component
 import Navbar from "./components/Navbar";
 import "./styles/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -32,7 +33,7 @@ function App() {
     useState(null);
   const [mockAverageEmissionsOracle, setMockAverageEmissionsOracle] =
     useState(null);
-  const [approverAddress, setApproverAddress] = useState(null); // Store the approver's address
+  const [approverAddress, setApproverAddress] = useState(null);
 
   useEffect(() => {
     if (window.ethereum) {
@@ -109,10 +110,10 @@ function App() {
         account={account}
         handleWallet={handleWallet}
         carbonCreditNFT={carbonCreditNFT}
-        projectApproval={projectApproval} // Pass the projectApproval instance here
+        projectApproval={projectApproval}
         mockProjectEmissionsOracle={mockProjectEmissionsOracle}
         mockAverageEmissionsOracle={mockAverageEmissionsOracle}
-        approverAddress={approverAddress} // Pass the approver's address
+        approverAddress={approverAddress}
       />
     </Router>
   );
@@ -133,7 +134,7 @@ function AppContent({
   const showRegisterLink = location.pathname !== "/register";
   const showApproveLink =
     account?.toLowerCase() === approverAddress?.toLowerCase() &&
-    location.pathname !== "/approve"; // Ensure case-insensitive comparison
+    location.pathname !== "/approve";
 
   return (
     <div className="App">
@@ -143,7 +144,7 @@ function AppContent({
         showDappLink={showDappLink}
         showOracleLink={showOracleLink}
         showRegisterLink={showRegisterLink}
-        showApproveLink={showApproveLink} // Pass the prop to Navbar
+        showApproveLink={showApproveLink}
       />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -187,6 +188,8 @@ function AppContent({
             />
           }
         />
+        {/* Add the Marketplace route */}
+        <Route path="/marketplace" element={<MarketplacePage />} />
       </Routes>
     </div>
   );

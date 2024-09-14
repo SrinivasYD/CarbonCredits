@@ -121,6 +121,17 @@ contract CarbonCreditNFT is ERC721, Pausable, Ownable(msg.sender) {
     }
 
     /**
+     * @notice Returns the total number of NFTs (tokens) minted by the contract.
+     * @dev This function simply returns the value of the tokenCounter, 
+     * which tracks the number of NFTs minted so far.
+     * @return The total supply of NFTs (tokens) minted in the contract.
+     */
+    function totalSupply() public view returns (uint256) {
+        return tokenCounter;
+    }
+
+
+    /**
      * @dev Internal function to calculate CO2 reduction.
      * @param energyProduced The amount of energy produced by the project.
      * @param averageEmissionsFactor The average emissions factor from the oracle.
