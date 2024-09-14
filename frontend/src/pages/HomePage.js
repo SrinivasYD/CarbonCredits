@@ -7,11 +7,13 @@ import Footer from "../components/Footer";
 import Approach from "../components/Approach";
 import ProjectPlan from "../components/ProjectPlan";
 import CarbonPage from "../components/CarbonPage";
+import Carbon from "../components/Carbon";
 
 const HomePage = () => {
   return (
     <>
       <Hero />
+      <Carbon />
       <ProjectPlan />
       <Approach /> 
       <CarbonPage />

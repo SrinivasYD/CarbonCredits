@@ -6,6 +6,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@react-spring/web": "^9.7.4",
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.4",
     "chartjs-plugin-zoom": "^2.0.1",
