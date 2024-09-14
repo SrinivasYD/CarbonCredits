@@ -39,7 +39,13 @@ contract MockProjectEmissionsOracle is IProjectEmissionsOracle {
     }
 
     function registerProject(address project) external override {
+        require(!registeredProjects[project], "Project is already registered");
+    
+        // Register the project
         registeredProjects[project] = true;
+    
+        // Automatically authorize the project as a caller
+        authorizedCallers[project] = true;
     }
 
     function updateProjectData(
@@ -66,12 +72,8 @@ contract MockProjectEmissionsOracle is IProjectEmissionsOracle {
 
     function updateRemainingEnergy(address project, uint256 remainingEnergy) external override {
         require(registeredProjects[project], "Project not registered");
-        require(authorizedCallers[msg.sender], "Not an authorized caller");
+        require(authorizedCallers[project], "Not an authorized caller");
         energyProducedData[project] = remainingEnergy; // Directly set the remaining energy
-    }
-
-    function authorizeCaller(address caller) external onlyAdmin {
-        authorizedCallers[caller] = true;
     }
 
     function deauthorizeCaller(address caller) external onlyAdmin {

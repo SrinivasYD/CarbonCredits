@@ -115,7 +115,7 @@ contract CarbonCreditNFT is ERC721, Pausable, Ownable(msg.sender) {
         uint256 remainingCO2Reduction = co2Reduction % 1000000;
         uint256 remainingEnergyProduced = remainingCO2Reduction / (averageEmissionsFactor - projectEmissionsData);
 
-        projectEmissionsOracle.updateRemainingEnergy(msg.sender, remainingEnergyProduced);
+        projectEmissionsOracle.updateRemainingEnergy(project.owner, remainingEnergyProduced);
 
         emit CarbonCreditsMinted(msg.sender, recipient, numberOfTokens, currentTime);
     }
