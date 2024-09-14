@@ -97,7 +97,9 @@ const OracleDashboard = ({
 
   const handleUpdateAverageEmissions = async () => {
     if (!isTrustedSource) {
-      toast.error("Only trusted sources can update the average emissions factor.");
+      toast.error(
+        "Only trusted sources can update the average emissions factor."
+      );
       return;
     }
 
@@ -216,4 +218,3 @@ const OracleDashboard = ({
 };
 
 export default OracleDashboard;
-
