@@ -41,7 +41,7 @@ header {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   /* Slight shadow for depth */
 }
- /* General body styling */
+/* General body styling */
 body {
   margin: 0;
   padding: 0;
@@ -91,8 +91,7 @@ nav {
 .nav-links a:hover {
   color: #02ab08; /* Change color on hover */
 }
- 
- 
+
 .connect-wallet {
   background-color: #02ab08;
   /* MetaMask's signature color */
@@ -139,7 +138,6 @@ connect-wallet {
   }
 }
 
-
 /* Main Content */
 main {
   flex-grow: 1;
@@ -154,10 +152,7 @@ main {
 }
 
 .hero-content {
-  background-color: rgba(0,
-      0,
-      0,
-      0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   /* Darker background for text visibility */
   padding: 75px;
   border-radius: 15px;
@@ -280,10 +275,7 @@ footer {
   transform: scale(1.05);
   /* Slight zoom effect */
   transition: transform 0.3s ease-in-out;
-  background-color: rgba(0,
-      0,
-      0,
-      0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   /* Slightly darker background on hover */
 }
 
@@ -541,7 +533,6 @@ button:hover {
   min-height: 100vh; /* Ensure the container takes up at least the full viewport height */
 }
 
-
 .oracle-dashboard::before {
   content: "";
   position: absolute;
@@ -753,7 +744,6 @@ button:hover {
   text-align: center;
   transition: background-color 0.3s, color 0.3s, transform 0.3s;
   /* Smooth transitions */
-
 }
 
 .description:hover {
@@ -777,7 +767,6 @@ button:hover {
   color: #f3f1f1;
 }
 
-
 .project-plan h2:hover {
   color: #02ab08;
   /* Change color on hover */
@@ -787,8 +776,8 @@ button:hover {
   /* Stronger shadow to enhance focus */
   cursor: pointer;
   /* Pointer to indicate it's clickable */
-} 
- 
+}
+
 .approach-container {
   display: flex;
   justify-content: center;
@@ -816,7 +805,12 @@ button:hover {
 
 .approach-content:hover {
   transform: scale(1.05);
-  background-color: rgba(255, 255, 255, 0.344); /* Changes transparency on hover */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.344
+  ); /* Changes transparency on hover */
 }
 
 .approach-content h2 {
@@ -880,7 +874,7 @@ button:hover {
   100% {
     opacity: 1;
     transform: translateY(0); /* Moves elements back to position */
-}
+  }
 }
 /* Optional background animation for a dynamic feel */
 .approach-container::before {
@@ -890,7 +884,12 @@ button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(120deg, rgba(2, 171, 8, 0.2), rgba(118, 255, 3, 0.2), rgba(2, 171, 8, 0.2));
+  background: linear-gradient(
+    120deg,
+    rgba(2, 171, 8, 0.2),
+    rgba(118, 255, 3, 0.2),
+    rgba(2, 171, 8, 0.2)
+  );
   animation: backgroundMove 10s infinite;
 }
 
@@ -905,7 +904,6 @@ button:hover {
     background-position: 0% 50%;
   }
 }
-
 
 .carousel-container {
   max-width: 1150px; /* Adjust width as needed */
@@ -1108,4 +1106,71 @@ button:hover {
   font-size: 36px;
   font-weight: bold;
   color: #1b5e20; /* Adjust this color for the counter text */
+}
+
+/* Minted NFTs section styling */
+.minted-nfts {
+  margin: 40px 0;
+  padding: 20px;
+  border: 2px solid #76ff03; /* Green border */
+  border-radius: 10px;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ); /* Background similar to other sections */
+  text-align: center;
+  position: relative;
+  z-index: 2; /* Ensures it is above the background overlay */
+}
+
+.minted-nfts h2 {
+  color: #ffcc00; /* Gold color for section titles */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Shadow for better readability */
+  margin-bottom: 20px;
+}
+
+.glowing-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Slightly transparent background */
+  color: white;
+  border: 2px solid #76ff03; /* Green border matching the rest of the page */
+}
+
+.glowing-table th,
+.glowing-table td {
+  border: 1px solid #76ff03; /* Green border for consistency */
+  padding: 12px 15px;
+  text-align: center;
+}
+
+.glowing-table thead {
+  background-color: #202020; /* Dark background for header */
+  color: #ffd700; /* Gold text color for header */
+  font-weight: bold;
+}
+
+.glowing-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Highlight on hover */
+}
+
+.glowing-table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05); /* Alternating row colors */
+}
+
+.glowing-table th {
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.glowing-table td {
+  font-size: 14px;
 }

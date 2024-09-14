@@ -115,10 +115,21 @@ contract CarbonCreditNFT is ERC721, Pausable, Ownable(msg.sender) {
         uint256 remainingCO2Reduction = co2Reduction % 1000000;
         uint256 remainingEnergyProduced = remainingCO2Reduction / (averageEmissionsFactor - projectEmissionsData);
 
-        projectEmissionsOracle.updateRemainingEnergy(msg.sender, remainingEnergyProduced);
+        projectEmissionsOracle.updateRemainingEnergy(project.owner, remainingEnergyProduced);
 
         emit CarbonCreditsMinted(msg.sender, recipient, numberOfTokens, currentTime);
     }
+
+    /**
+     * @notice Returns the total number of NFTs (tokens) minted by the contract.
+     * @dev This function simply returns the value of the tokenCounter, 
+     * which tracks the number of NFTs minted so far.
+     * @return The total supply of NFTs (tokens) minted in the contract.
+     */
+    function totalSupply() public view returns (uint256) {
+        return tokenCounter;
+    }
+
 
     /**
      * @dev Internal function to calculate CO2 reduction.
