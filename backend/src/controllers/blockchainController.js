@@ -38,7 +38,7 @@ const projectApprovalContract = new ethers.Contract(
 )
 
 // Function to fetch events and sync with MongoDB
-async function fetchAndSyncEvents() {
+async function fetchAndSyncEvents () {
   try {
     // Clear existing data before sync
     await Project.deleteMany({})
@@ -84,7 +84,7 @@ async function fetchAndSyncEvents() {
 }
 
 // Set up event listeners
-function setupEventListeners() {
+function setupEventListeners () {
   projectApprovalContract.on(
     'ProjectSubmitted',
     async (owner, projectDetailsHash, certificateHash) => {
