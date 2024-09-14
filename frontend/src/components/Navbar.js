@@ -30,7 +30,9 @@ const Navbar = ({
       </div>
       <ul className="nav-links">
         <li>
-          <a href="#marketplace">NFT Marketplace</a>
+          <a href="/marketplace" target="_blank" rel="noopener noreferrer">
+            NFT Marketplace
+          </a>
         </li>
         {showDappLink && (
           <li>

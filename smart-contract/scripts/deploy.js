@@ -42,6 +42,22 @@ async function main() {
 
   console.log("CarbonCreditNFT deployed to:", carbonCreditNFTAddress);
 
+  // Deploy CarbonCreditNFTMarketplace with CarbonCreditNFT address
+  const CarbonCreditNFTMarketplace = await ethers.getContractFactory(
+    "CarbonCreditNFTMarketplace"
+  );
+  const carbonCreditNFTMarketplace = await CarbonCreditNFTMarketplace.deploy(
+    carbonCreditNFTAddress // Pass the deployed CarbonCreditNFT address
+  );
+  await carbonCreditNFTMarketplace.waitForDeployment();
+  const carbonCreditNFTMarketplaceAddress =
+    await carbonCreditNFTMarketplace.getAddress();
+
+  console.log(
+    "CarbonCreditNFTMarketplace deployed to:",
+    carbonCreditNFTMarketplaceAddress
+  );
+
   // Save the deployment info to a file
   const contractsDir = path.join(
     __dirname,
@@ -64,6 +80,7 @@ async function main() {
         MockAverageEmissionsOracle: mockAvgOracleAddress,
         ProjectApproval: projectApprovalAddress,
         CarbonCreditNFT: carbonCreditNFTAddress,
+        CarbonCreditNFTMarketplace: carbonCreditNFTMarketplaceAddress,
       },
       undefined,
       2
@@ -78,6 +95,9 @@ async function main() {
   );
   const ProjectApprovalArtifact = artifacts.readArtifactSync("ProjectApproval");
   const CarbonCreditNFTArtifact = artifacts.readArtifactSync("CarbonCreditNFT");
+  const CarbonCreditNFTMarketplaceArtifact = artifacts.readArtifactSync(
+    "CarbonCreditNFTMarketplace"
+  );
 
   fs.writeFileSync(
     path.join(contractsDir, "MockProjectEmissionsOracle.json"),
@@ -97,6 +117,11 @@ async function main() {
   fs.writeFileSync(
     path.join(contractsDir, "CarbonCreditNFT.json"),
     JSON.stringify(CarbonCreditNFTArtifact, null, 2)
+  );
+
+  fs.writeFileSync(
+    path.join(contractsDir, "CarbonCreditNFTMarketplace.json"),
+    JSON.stringify(CarbonCreditNFTMarketplaceArtifact, null, 2)
   );
 }
 
