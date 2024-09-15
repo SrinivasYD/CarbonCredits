@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Table } from "react-bootstrap";
+  
+
 
 const DappPage = ({
   account,
@@ -20,18 +22,26 @@ const DappPage = ({
   const [recipientAddress, setRecipientAddress] = useState(account);
   const [nftDetails, setNftDetails] = useState(null);
   const [mintedNFTs, setMintedNFTs] = useState([]);
+  const [timer, setTimer] = useState(30);
 
+
+  
   useEffect(() => {
     if (carbonCreditNFT) {
       fetchData();
       fetchMintedNFTs(); // Fetch past NFTs minted from blockchain events
     }
-  }, [
-    account,
-    carbonCreditNFT,
-    mockProjectEmissionsOracle,
-    mockAverageEmissionsOracle,
-  ]);
+  }, [account, carbonCreditNFT, mockProjectEmissionsOracle, mockAverageEmissionsOracle]);
+
+  useEffect(() => {
+    let countdown;
+    if (timer > 0) {
+      countdown = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    }
+    return () => clearInterval(countdown);
+  }, [timer]);
 
   const fetchData = async () => {
     await fetchOracleData();
@@ -164,10 +174,22 @@ const DappPage = ({
       setMintingStatus("Minting...");
       toast.info("Minting NFT...");
 
+      // Start the countdown timer for 30 seconds
+      setTimer(30);
+      const countdown = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer === 1) {
+            clearInterval(countdown); // Clear timer when it reaches 0
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
+
       const mintResult = await carbonCreditNFT.methods
         .mintCarbonCredit(recipientAddress)
         .send({ from: account });
 
+      // Once minting is done, reset the timer and show success message
       setMintingStatus("Minting successful!");
       toast.success("NFT minted successfully!");
 
@@ -177,6 +199,7 @@ const DappPage = ({
       toast.error("Error minting NFT.");
       console.error("Error minting NFT:", error);
       setMintingStatus("Minting failed.");
+      setTimer(0); // Reset the timer on error
     }
   };
 
@@ -213,8 +236,13 @@ const DappPage = ({
                   placeholder="Enter recipient address"
                   className="data-input"
                 />
-                <button onClick={handleMintNFT}>Mint NFT</button>
+               <button onClick={handleMintNFT}>Mint NFT</button>
                 {mintingStatus && <p>{mintingStatus}</p>}
+
+                {/* Display the timer while minting */}
+                {mintingStatus === "Minting..." && (
+                  <p>Minting in progress... Time left: {timer} seconds</p>
+                )}
               </section>
 
               {/* Minted NFTs Table */}

@@ -1151,3 +1151,131 @@ button:hover {
 .glowing-table td {
   font-size: 14px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.trusted-source-panel {
+  margin: 40px 0;
+  padding: 20px;
+  border: 2px solid #76ff03;
+  /* Green border */
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: relative;
+  z-index: 2;
+  /* Ensures sections are above the overlay */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Center the content */
+}
+
+.oracle-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Align inputs and button to the center */
+  width: 100%;
+  /* Make the width consistent */
+}
+
+.oracle-controls .data-input {
+  width: 60%;
+  /* Consistent width for all input fields */
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  text-align: center;
+  /* Center text in input */
+}
+
+.oracle-controls .action-button {
+  background-color: #76ff03;
+  color: #121212;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  /* Add space above button */
+  width: 20%;
+  /* Match button width to input fields */
+}
+
+.oracle-controls .action-button:hover {
+  background-color: #64dd17;
+  transform: translateY(-2px);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+.non-trusted-message {
+  font-size: 1.5em;
+  /* Increase font size for better visibility */
+  color: #ffcc00;
+  /* Gold color to make the message stand out */
+  margin-top: 20px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  /* Text shadow for better readability */
+  position: relative;
+  z-index: 2;
+  /* Ensure it's above the background overlay */
+}
+
+.non-trusted-message {
+  font-size: 1.5em;
+  /* Increase font size for better visibility */
+  color: #ffcc00;
+  /* Gold color to make the message stand out */
+  margin-top: 20px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  /* Text shadow for better readability */
+  position: relative;
+  z-index: 2;
+  /* Ensure it's above the background overlay */
+}
+
+
+.data-input1 {
+  width: 60%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+
+@media (max-width: 768px) {
+  .data-input1 {
+    width: 80%;
+  }
+}
+
+
+.oracle-controls .data-input1 {
+  width: 60%;
+  /* Consistent width for all input fields */
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  text-align: center;
+  /* Center text in input */
+}

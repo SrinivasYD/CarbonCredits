@@ -195,7 +195,7 @@ function AppContent({
           }
         />
         <Route path="/marketplace" element={<MarketplacePage />} />
-        <Route path="/faq" element={<FAQPage />} /> {/* Add FAQ route */}
+        <Route path="/faq" element={<FAQPage />} />  
       </Routes>
     </div>
   );
