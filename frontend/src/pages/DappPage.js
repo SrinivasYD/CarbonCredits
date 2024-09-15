@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Table } from "react-bootstrap";
@@ -277,7 +277,7 @@ const DappPage = ({
                   </p>
                 </>
               ) : (
-                <p>
+                <p style={{ fontSize: '1.5em', color: '#ffcc00' }}>
                   No data available. Register your project to fetch oracle data.
                 </p>
               )}
@@ -285,7 +285,9 @@ const DappPage = ({
           )}
         </>
       ) : (
-        <p>Please connect your wallet to interact with the Dapp.</p>
+        <p style={{ fontSize: '1.5em', color: '#ffcc00' }}>
+          Please connect your wallet to interact with the Dapp.
+        </p>
       )}
     </div>
   );
