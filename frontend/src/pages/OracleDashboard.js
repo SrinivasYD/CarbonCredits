@@ -11,7 +11,9 @@ const OracleDashboard = ({
   const [isAdmin, setIsAdmin] = useState(false);
   const [isTrustedSource, setIsTrustedSource] = useState(false);
   const [newTrustedSource, setNewTrustedSource] = useState("");
-  const [projectAddress, setProjectAddress] = useState(""); // New state for project address
+  const [removeTrustedSource, setRemoveTrustedSource] = useState("");
+  const [deauthorizeCaller, setDeauthorizeCaller] = useState("");
+  const [projectAddress, setProjectAddress] = useState("");
   const [energyProduced, setEnergyProduced] = useState("");
   const [projectEmissions, setProjectEmissions] = useState("");
   const [averageEmissionsFactor, setAverageEmissionsFactor] = useState("");
@@ -19,23 +21,17 @@ const OracleDashboard = ({
 
   useEffect(() => {
     if (account && mockProjectEmissionsOracle && mockAverageEmissionsOracle) {
-      checkIfAdminOrTrustedSource(); // Check if the connected account is an admin or trusted source
+      checkIfAdminOrTrustedSource();
     }
   }, [account, mockProjectEmissionsOracle, mockAverageEmissionsOracle]);
 
   const checkIfAdminOrTrustedSource = async () => {
     try {
-      // Check if the connected account is the admin
       const adminAddress = await mockProjectEmissionsOracle.methods
         .admin()
         .call();
-      if (adminAddress.toLowerCase() === account.toLowerCase()) {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
-      }
+      setIsAdmin(adminAddress.toLowerCase() === account.toLowerCase());
 
-      // Check if the connected account is a trusted source
       const isTrusted = await mockProjectEmissionsOracle.methods
         .trustedSources(account)
         .call();
@@ -50,23 +46,49 @@ const OracleDashboard = ({
       toast.error("Please enter a valid address.");
       return;
     }
-
     try {
-      // Add trusted source to the Project Emissions Oracle
       await mockProjectEmissionsOracle.methods
         .addTrustedSource(newTrustedSource)
         .send({ from: account });
-
-      // Add trusted source to the Average Emissions Oracle
       await mockAverageEmissionsOracle.methods
         .addTrustedSource(newTrustedSource)
         .send({ from: account });
-
       toast.success("Trusted source added successfully to both oracles!");
-      setNewTrustedSource(""); // Clear input after successful addition
+      setNewTrustedSource("");
     } catch (error) {
-      console.error("An error occurred while adding a trusted source:", error);
       toast.error("Failed to add trusted source.");
+    }
+  };
+
+  const handleRemoveTrustedSource = async () => {
+    if (!removeTrustedSource) {
+      toast.error("Please enter a valid address.");
+      return;
+    }
+    try {
+      await mockProjectEmissionsOracle.methods
+        .removeTrustedSource(removeTrustedSource)
+        .send({ from: account });
+      toast.success("Trusted source removed successfully!");
+      setRemoveTrustedSource("");
+    } catch (error) {
+      toast.error("Failed to remove trusted source.");
+    }
+  };
+
+  const handleDeauthorizeCaller = async () => {
+    if (!deauthorizeCaller) {
+      toast.error("Please enter a valid address.");
+      return;
+    }
+    try {
+      await mockProjectEmissionsOracle.methods
+        .deauthorizeCaller(deauthorizeCaller)
+        .send({ from: account });
+      toast.success("Caller deauthorized successfully!");
+      setDeauthorizeCaller("");
+    } catch (error) {
+      toast.error("Failed to deauthorize caller.");
     }
   };
 
@@ -75,22 +97,16 @@ const OracleDashboard = ({
       toast.error("Only trusted sources can update oracle data.");
       return;
     }
-
     if (!projectAddress) {
       toast.error("Please enter a valid project address.");
       return;
     }
-
     try {
       await mockProjectEmissionsOracle.methods
         .updateProjectData(projectAddress, energyProduced, projectEmissions)
         .send({ from: account });
-
-      // setOracleStatus("Project data updated successfully!");
       toast.success("Project data updated successfully!");
     } catch (error) {
-      console.error("Error updating oracle data:", error);
-      // setOracleStatus("Failed to update project data.");
       toast.error("Failed to update project data.");
     }
   };
@@ -102,24 +118,19 @@ const OracleDashboard = ({
       );
       return;
     }
-
     try {
       await mockAverageEmissionsOracle.methods
         .updateAverageEmissionsFactor(averageEmissionsFactor)
         .send({ from: account });
-
-      //setOracleStatus("Average emissions factor updated successfully!");
       toast.success("Average emissions factor updated successfully!");
     } catch (error) {
-      console.error("Error updating average emissions factor:", error);
-      //setOracleStatus("Failed to update average emissions factor.");
       toast.error("Failed to update average emissions factor.");
     }
   };
 
   return (
     <div className="oracle-dashboard">
-      <ToastContainer /> {/* Add this line to render Toast notifications */}
+      <ToastContainer />
       {!account ? (
         <button onClick={handleWallet} className="connect-wallet">
           Connect Wallet
@@ -130,7 +141,9 @@ const OracleDashboard = ({
             <div className="admin-panel">
               <h2 className="panel-heading">Admin Panel</h2>
               <p>You are logged in as the admin.</p>
-              <div className="admin-controls">
+
+              {/* Add Trusted Source */}
+              <div className="input-button-wrapper">
                 <input
                   type="text"
                   placeholder="Enter trusted source address"
@@ -145,6 +158,40 @@ const OracleDashboard = ({
                   Add Trusted Source
                 </button>
               </div>
+
+              {/* Remove Trusted Source */}
+              <div className="input-button-wrapper">
+                <input
+                  type="text"
+                  placeholder="Enter address to remove as trusted source"
+                  value={removeTrustedSource}
+                  onChange={(e) => setRemoveTrustedSource(e.target.value)}
+                  className="data-input"
+                />
+                <button
+                  onClick={handleRemoveTrustedSource}
+                  className="action-button"
+                >
+                  Remove Trusted Source
+                </button>
+              </div>
+
+              {/* Deauthorize Caller */}
+              <div className="input-button-wrapper">
+                <input
+                  type="text"
+                  placeholder="Enter address to deauthorize caller"
+                  value={deauthorizeCaller}
+                  onChange={(e) => setDeauthorizeCaller(e.target.value)}
+                  className="data-input"
+                />
+                <button
+                  onClick={handleDeauthorizeCaller}
+                  className="action-button"
+                >
+                  Deauthorize Caller
+                </button>
+              </div>
             </div>
           )}
 
@@ -153,7 +200,6 @@ const OracleDashboard = ({
               <h2 className="panel-heading">Trusted Source Panel</h2>
               <p>You are logged in as a trusted source.</p>
               <div className="oracle-controls">
-                {/* Project Address Input */}
                 <input
                   type="text"
                   value={projectAddress}
@@ -161,7 +207,6 @@ const OracleDashboard = ({
                   placeholder="Enter Project Owner's Wallet Address"
                   className="data-input"
                 />
-                {/* Project Emissions Oracle Data */}
                 <input
                   type="number"
                   value={energyProduced}
@@ -183,7 +228,6 @@ const OracleDashboard = ({
                   Update Project Data
                 </button>
 
-                {/* Average Emissions Oracle Data */}
                 <input
                   type="number"
                   value={averageEmissionsFactor}
@@ -197,8 +241,6 @@ const OracleDashboard = ({
                 >
                   Update Average Emissions
                 </button>
-
-                {oracleStatus && <p>{oracleStatus}</p>}
               </div>
             </div>
           )}
