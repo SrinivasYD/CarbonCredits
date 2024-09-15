@@ -66,7 +66,14 @@ const Navbar = ({
           <li>
             <Link to="/approve">Approve Project</Link>
           </li>
+          
         )}
+         {/* Add FAQ Link */}
+         <li>
+          <a href="/faq" target="_blank" rel="noopener noreferrer">
+            FAQ
+          </a>
+        </li>
       </ul>
       <button
         className="connect-wallet"
