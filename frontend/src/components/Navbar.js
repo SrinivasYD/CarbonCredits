@@ -9,61 +9,69 @@ const Navbar = ({
   showRegisterLink,
   showApproveLink,
 }) => {
+  const handleConnect = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        handleWallet(accounts[0]); // Update account in parent
+      } catch (error) {
+        console.error("Error connecting to wallet:", error);
+      }
+    } else {
+      alert("Please install MetaMask!");
+    }
+  };
+
+  const handleDisconnect = () => {
+    handleWallet(null); // Update account in parent
+  };
+
   const shortenAddress = (address) => {
     return address
       ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
       : "Connect Wallet";
   };
 
-  const navigateToHome = () => {
-    window.location.href = "/"; // Assuming the homepage route is '/'
-  };
-
   return (
     <nav>
       <div
         className="logo"
-        onClick={navigateToHome}
+        onClick={() => window.location.href = "/"}
         style={{ cursor: "pointer" }}
       >
         CarbonCredit
       </div>
       <ul className="nav-links">
         <li>
-          <a href="/marketplace" target="_blank" rel="noopener noreferrer">
-            NFT Marketplace
-          </a>
+          <Link to="/marketplace">NFT Marketplace</Link>
         </li>
         {showDappLink && (
           <li>
-            <a href="/dapp" target="_blank" rel="noopener noreferrer">
-              Dapp
-            </a>
+            <Link to="/dapp">Dapp</Link>
           </li>
         )}
         {showOracleLink && (
           <li>
-            <a href="/oracle" target="_blank" rel="noopener noreferrer">
-              Oracles
-            </a>
+            <Link to="/oracle">Oracles</Link>
           </li>
         )}
         {showRegisterLink && (
           <li>
-            <a href="/register" target="_blank" rel="noopener noreferrer">
-              Register Project
-            </a>
+            <Link to="/register">Register Project</Link>
           </li>
         )}
         {showApproveLink && (
           <li>
-            <a href="/approve" target="_blank" rel="noopener noreferrer">
-              Approve Project
-            </a>
+            <Link to="/approve">Approve Project</Link>
           </li>
         )}
       </ul>
-      <button className="connect-wallet" onClick={handleWallet}>
+      <button
+        className="connect-wallet"
+        onClick={account ? handleDisconnect : handleConnect}
+      >
         {account ? shortenAddress(account) : "Connect Wallet"}
       </button>
     </nav>

@@ -219,11 +219,11 @@ const MarketplacePage = () => {
       {/* Section 1: Listed NFTs for Sale */}
       <div className="nft-section">
         <h2 style={{ color: '#ffffff' }}>Buy NFTs</h2>
-        <div className="nft-scrollbar">
+        <div className="nft-scrollbar-vertical">
           {nftsForSale.length === 0 ? (
-            <div>No NFTs available for sale</div>
+            <div style={{ color: '#ffffff'}} className="nonft" >No NFTs available for sale</div>
           ) : (
-            <div className="nft-card-container">
+            <div className="nft-scrollbar">
               {nftsForSale.map((nft) => (
                 <div key={nft.tokenId} className="nft-card">
                   <img src={nft.imageUrl} alt={`NFT ${nft.tokenId}`} />
@@ -241,7 +241,7 @@ const MarketplacePage = () => {
                         Buy NFT
                       </button>
                     ) : (
-                      <p>You own this NFT</p>
+                      <p>You own this NFT</p> 
                     )}
                   </div>
                 </div>
@@ -256,7 +256,7 @@ const MarketplacePage = () => {
         <h2 style={{ color: '#ffffff' }}>Your NFTs</h2>
         <div className="nft-scrollbar">
           {ownedNfts.length === 0 ? (
-            <div style={{ color: '#ffffff' }} >You don't own any NFTs</div>
+            <div style={{ color: '#ffffff'}} className="nonft"  >You don't own any NFTs</div>
           ) : (
             ownedNfts.map((nft) => (
               <div key={nft.tokenId} className="nft-card">

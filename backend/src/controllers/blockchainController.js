@@ -51,7 +51,7 @@ const carbonCreditNFTContract = new ethers.Contract(
 )
 
 // Function to fetch and sync project-related events with MongoDB
-async function fetchAndSyncEvents () {
+async function fetchAndSyncEvents() {
   try {
     // Clear existing project data before sync
     await Project.deleteMany({})
@@ -101,7 +101,7 @@ async function fetchAndSyncEvents () {
 }
 
 // Function to fetch and sync minted NFT events with MongoDB
-async function fetchAndSyncMintedNFTs () {
+async function fetchAndSyncMintedNFTs() {
   try {
     // Clear existing NFT data before syncing
     await MintedNFT.deleteMany({})
@@ -185,7 +185,7 @@ function setupEventListeners() {
 }
 
 // Set up event listeners for CarbonCreditNFT minting events
-function setupMintingEventListener () {
+function setupMintingEventListener() {
   carbonCreditNFTContract.on(
     'CarbonCreditsMinted',
     async (owner, recipient, numberOfTokens, timestamp) => {

@@ -93,6 +93,16 @@ input {
   width: 100%;
 }
 
+.nft-scrollbar-vertical {
+  max-height: 400px; /* Adjust as needed */
+  overflow-y: auto;  /* Enable vertical scroll */
+}
+
+.nft-card-container-vertical {
+  display: flex;
+  flex-direction: column; /* Stack NFT cards vertically */
+  gap: 20px; /* Add some space between the cards */
+}
 
 
 
@@ -102,18 +112,27 @@ input {
 
 
 
+ 
 
 
+.nonft {
+  font-size: 18px !important;
+  color: #ffffff !important;
+  background-color: #4CAF50 !important;
+  padding: 15px 25px !important;
+  border-radius: 8px !important;
+  text-align: center !important;
+  display: inline-block !important;
+  margin: 15px 0 !important;
+  font-weight: bold !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.3s, transform 0.3s !important;
+}
 
-
-
-
-
-
-
-
-
-
+.nonft:hover {
+  background-color: #45a049 !important;
+  transform: scale(1.05) !important;
+}
 
 
 
