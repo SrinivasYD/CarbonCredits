@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Table } from "react-bootstrap";
 
 const DappPage = ({
@@ -69,6 +71,7 @@ const DappPage = ({
           setOracleDataFetched(false);
         }
       } catch (error) {
+        toast.error("Error fetching oracle data or checking registration.");
         console.error(
           "Error fetching oracle data or checking registration:",
           error
@@ -92,12 +95,12 @@ const DappPage = ({
           setNftDetails(null);
         }
       } catch (error) {
+        toast.error("Error fetching NFT details.");
         console.error("Error fetching NFT details:", error);
       }
     }
   };
 
-  // Fetch the past minted NFTs from the blockchain events
   const fetchMintedNFTs = async () => {
     try {
       console.log("Fetching minted NFTs from blockchain...");
@@ -121,15 +124,14 @@ const DappPage = ({
       setMintedNFTs(nfts); // Store the NFTs in state to display later
       console.log("Minted NFTs fetched:", nfts);
     } catch (error) {
+      toast.error("Error fetching minted NFTs.");
       console.error("Error fetching minted NFTs:", error);
     }
   };
 
   const handleRegisterProject = async () => {
     if (!/^0x[a-fA-F0-9]{64}$/.test(dataHash)) {
-      alert(
-        "Data hash must be a valid 64-character hex string prefixed with 0x"
-      );
+      toast.warning("Data hash must be a valid 64-character hex string prefixed with 0x");
       return;
     }
 
@@ -140,35 +142,37 @@ const DappPage = ({
         .send({ from: account });
 
       setProjectRegistered(true);
-      alert("Project registered successfully!");
+      toast.success("Project registered successfully!");
 
       fetchData(); // Fetch all data again after registration
     } catch (error) {
+      toast.error("Error registering project.");
       console.error("Error registering project:", error);
     }
   };
 
   const handleMintNFT = async () => {
     if (!projectRegistered) {
-      alert("Project is not registered!");
+      toast.warning("Project is not registered!");
       return;
     }
 
     try {
       console.log("Minting NFT...");
       setMintingStatus("Minting...");
+      toast.info("Minting NFT...");
 
-      // Call the smart contract to mint NFTs and handle all calculations on-chain
       const mintResult = await carbonCreditNFT.methods
         .mintCarbonCredit(recipientAddress)
         .send({ from: account });
 
       setMintingStatus("Minting successful!");
-      alert("NFT minted successfully!");
+      toast.success("NFT minted successfully!");
 
       fetchData(); // Fetch data again after minting
       fetchMintedNFTs(); // Fetch updated minted NFTs after minting
     } catch (error) {
+      toast.error("Error minting NFT.");
       console.error("Error minting NFT:", error);
       setMintingStatus("Minting failed.");
     }
@@ -176,6 +180,7 @@ const DappPage = ({
 
   return (
     <div className="dapp-page">
+      <ToastContainer />
       {account ? (
         <>
           {!projectRegistered ? (
@@ -261,27 +266,26 @@ const DappPage = ({
                   <p>
                     Project Emissions:{" "}
                     {projectEmissions !== null
-                      ? `${projectEmissions.toString()} gCO2/kWh`
+                      ? `${projectEmissions.toString()} tons CO2`
                       : "No data available"}
                   </p>
                   <p>
                     Average Emissions Factor:{" "}
                     {averageEmissions !== null
-                      ? `${averageEmissions.toString()} gCO2/kWh`
+                      ? `${averageEmissions.toString()} tons CO2/kWh`
                       : "No data available"}
                   </p>
                 </>
               ) : (
-                <p>No oracle data available yet.</p>
+                <p>
+                  No data available. Register your project to fetch oracle data.
+                </p>
               )}
             </section>
           )}
         </>
       ) : (
-        <p className="disconnected-message">
-          Please connect your wallet using the button above to interact with the
-          Dapp.
-        </p>
+        <p>Please connect your wallet to interact with the Dapp.</p>
       )}
     </div>
   );
