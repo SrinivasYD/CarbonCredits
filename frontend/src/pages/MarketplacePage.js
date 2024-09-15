@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
+import "react-toastify/dist/ReactToastify.css"; // Toastify CSS
+import { toast, ToastContainer } from 'react-toastify'; 
 import { BrowserProvider, Contract, formatEther, parseEther } from "ethers";
 import CarbonCreditNFTMarketplaceABI from "../contracts/CarbonCreditNFTMarketplace.json";
 import CarbonCreditNFTABI from "../contracts/CarbonCreditNFT.json";
 import contractAddresses from "../contracts/contract-addresses.json";
 import "../styles/Marketplace.css"; // CSS for styling
+
+import NFT1 from "../nft-images/NFT1.jpg";
+import NFT2 from "../nft-images/NFT2.png";
+import NFT3 from "../nft-images/NFT3.png";
+import NFT4 from "../nft-images/NFT4.jpg";  // Adjust path according to your project structure
+import NFT5 from "../nft-images/NFT5.png";
+import NFT6 from "../nft-images/NFT6.png";
+import Testimonials from '../components/Testimonials';
+
 
 const MarketplacePage = () => {
   const [nftsForSale, setNftsForSale] = useState([]); // NFTs listed for sale
@@ -108,34 +119,33 @@ const MarketplacePage = () => {
       window.ethereum.removeListener("accountsChanged", loadBlockchainData);
     };
   }, []);
+ 
+  
 
   // Function to approve the marketplace to handle all NFTs and list the NFT
   const setApprovalForAllAndListNFT = async (tokenId, price) => {
     try {
-      // Check if approval is already given to the marketplace for all NFTs
       const isApproved = await nftContract.isApprovedForAll(
         account,
         marketplaceContract.target
       );
 
-      // If not approved, set approval for all NFTs
       if (!isApproved) {
         const approvalTx = await nftContract.setApprovalForAll(
           marketplaceContract.target,
           true
         );
         await approvalTx.wait();
-        console.log(`Marketplace approved to handle all NFTs`);
+        toast.success("Marketplace approved to handle all NFTs");
       }
 
-      // Convert price to wei format before listing
       const tx = await marketplaceContract.listNFT(tokenId, parseEther(price));
       await tx.wait();
-      alert("NFT listed successfully!");
+      toast.success("NFT listed successfully!");
 
-      // Reload NFT data after listing
-      await loadBlockchainData(); // Refresh the NFT data
+      await loadBlockchainData();
     } catch (error) {
+      toast.error("Listing failed: " + error.message);
       console.error("Listing failed:", error);
     }
   };
@@ -146,29 +156,74 @@ const MarketplacePage = () => {
         value: parseEther(price),
       });
       await tx.wait();
-      alert("NFT purchased successfully!");
-      // Re-fetch the blockchain data after the transaction is complete
-      loadBlockchainData(); // Call the function that loads the NFT data
+      toast.success("NFT purchased successfully!");
+      loadBlockchainData();
     } catch (error) {
+      toast.error("Transaction failed: " + error.message);
       console.error("Transaction failed:", error);
     }
   };
 
+
+
+  const trendingNFTs = [
+    { rank: 1, collection: "Rainforest Conservation", floorPrice: "2.5 ETH", volume: "300 ETH", image: NFT1 },
+    { rank: 2, collection: "Ocean Cleanup Project", floorPrice: "1.8 ETH", volume: "220 ETH", image: NFT2 },
+    { rank: 3, collection: "Wind Energy Credits", floorPrice: "1.2 ETH", volume: "180 ETH", image: NFT3 },
+    { rank: 4, collection: "Solar Power Projects", floorPrice: "2.0 ETH", volume: "250 ETH", image: NFT4 },
+    { rank: 5, collection: "Reforestation Program", floorPrice: "1.5 ETH", volume: "200 ETH", image: NFT5 },
+    { rank: 6, collection: "Waste Recycling Initiative", floorPrice: "1.1 ETH", volume: "150 ETH", image: NFT6 },
+  ];
+
+
   if (loading) return <div>Loading Marketplace...</div>;
 
+
   return (
-    <div className="marketplace-container">
-      <h1>NFT Marketplace</h1>
+    <div className="nft-marketplace">
+      <ToastContainer />
+      <div className="hero-section">
+        <h1 className="hero-heading">Trade Carbon Credits with NFTs to Offset Your Carbon Footprint</h1>
+        <p className="hero-subheading">Join the leading marketplace for eco-friendly, sustainable NFTs and carbon credits.</p>
+      </div>
+
+      <div className="trending-section">
+        <h2 style={{ color: '#ffffff' }}>Top Trending NFTs</h2>
+        <table className="trending-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Collection</th>
+              <th>Floor Price</th>
+              <th>Volume</th>
+            </tr>
+          </thead>
+          <tbody>
+            {trendingNFTs.map((nft, index) => (
+              <tr key={index}>
+                <td>{nft.rank}</td>
+                <td>
+                  <img src={nft.image} alt={`Trending NFT ${nft.rank}`} className="trending-image" />
+                  {nft.collection}
+                </td>
+                <td>{nft.floorPrice}</td>
+                <td>{nft.volume}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
 
       {/* Section 1: Listed NFTs for Sale with Horizontal Scroll */}
       {/* Section 1: Listed NFTs for Sale */}
       <div className="nft-section">
-        <h2>Buy NFTs</h2>
-        <div className="nft-scrollbar">
+        <h2 style={{ color: '#ffffff' }}>Buy NFTs</h2>
+        <div className="nft-scrollbar-vertical">
           {nftsForSale.length === 0 ? (
-            <div>No NFTs available for sale</div>
+            <div style={{ color: '#ffffff'}} className="nonft" >No NFTs available for sale</div>
           ) : (
-            <div className="nft-card-container">
+            <div className="nft-scrollbar">
               {nftsForSale.map((nft) => (
                 <div key={nft.tokenId} className="nft-card">
                   <img src={nft.imageUrl} alt={`NFT ${nft.tokenId}`} />
@@ -186,7 +241,7 @@ const MarketplacePage = () => {
                         Buy NFT
                       </button>
                     ) : (
-                      <p>You own this NFT</p>
+                      <p>You own this NFT</p> 
                     )}
                   </div>
                 </div>
@@ -198,10 +253,10 @@ const MarketplacePage = () => {
 
       {/* Section 2: Owned NFTs with Horizontal Scroll */}
       <div className="nft-section">
-        <h2>Your NFTs</h2>
+        <h2 style={{ color: '#ffffff' }}>Your NFTs</h2>
         <div className="nft-scrollbar">
           {ownedNfts.length === 0 ? (
-            <div>You don't own any NFTs</div>
+            <div style={{ color: '#ffffff'}} className="nonft"  >You don't own any NFTs</div>
           ) : (
             ownedNfts.map((nft) => (
               <div key={nft.tokenId} className="nft-card">
@@ -236,6 +291,7 @@ const MarketplacePage = () => {
           )}
         </div>
       </div>
+      <Testimonials />
     </div>
   );
 };

@@ -1,6 +1,6 @@
+// backend/src/index.js
 const express = require('express')
 const cors = require('cors')
-const axios = require('axios') // If still needed elsewhere
 const app = express()
 const port = 5000
 
@@ -9,8 +9,7 @@ require('./config/db') // Connect to MongoDB
 // Importing your Blockchain Controller
 const {
   fetchAndSyncEvents,
-  setupEventListeners,
-  fetchAndSyncMintedNFTs // Import the new function for syncing minted NFTs
+  setupEventListeners
 } = require('./controllers/blockchainController')
 
 // Import the carbon emission routes
@@ -25,7 +24,6 @@ app.use('/api', carbonEmissionRoutes)
 
 // Sync blockchain data and set up event listeners
 fetchAndSyncEvents()
-fetchAndSyncMintedNFTs() // Sync the minted NFTs with MongoDB
 setupEventListeners()
 
 app.listen(port, () => {

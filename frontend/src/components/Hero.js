@@ -6,7 +6,7 @@ const Hero = () => {
       <div className="hero-content">
         <h1>Carbon Credit NFT Marketplace</h1>
         <p>Building a sustainable future through blockchain technology.</p>
-        <a href="/nft-marketplace" className="explore-button">
+        <a href="/marketplace" className="explore-button">
           Explore NFT Marketplace
         </a>
       </div>

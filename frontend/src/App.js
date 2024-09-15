@@ -11,7 +11,7 @@ import DappPage from "./pages/DappPage";
 import OracleDashboard from "./pages/OracleDashboard";
 import RegisterProject from "./pages/RegisterProject";
 import ApproveProject from "./pages/ApproveProject";
-import MarketplacePage from "./pages/MarketplacePage"; // Import the marketplace component
+import MarketplacePage from "./pages/MarketplacePage";
 import Navbar from "./components/Navbar";
 import "./styles/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,7 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import MockProjectEmissionsOracleArtifact from "./contracts/MockProjectEmissionsOracle.json";
 import MockAverageEmissionsOracleArtifact from "./contracts/MockAverageEmissionsOracle.json";
 import CarbonCreditNFTArtifact from "./contracts/CarbonCreditNFT.json";
-import ProjectApprovalArtifact from "./contracts/ProjectApproval.json"; // Import ProjectApproval ABI
+import ProjectApprovalArtifact from "./contracts/ProjectApproval.json";
 import contractAddresses from "./contracts/contract-addresses.json";
 
 function App() {
@@ -89,7 +89,12 @@ function App() {
     };
   }, []);
 
-  const handleWallet = async () => {
+  const handleWallet = async (account) => {
+    if (account === null) {
+      setAccount(null);
+      return;
+    }
+    
     if (window.ethereum) {
       try {
         const accounts = await window.ethereum.request({
@@ -188,7 +193,6 @@ function AppContent({
             />
           }
         />
-        {/* Add the Marketplace route */}
         <Route path="/marketplace" element={<MarketplacePage />} />
       </Routes>
     </div>
