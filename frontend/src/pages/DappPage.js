@@ -131,7 +131,9 @@ const DappPage = ({
 
   const handleRegisterProject = async () => {
     if (!/^0x[a-fA-F0-9]{64}$/.test(dataHash)) {
-      toast.warning("Data hash must be a valid 64-character hex string prefixed with 0x");
+      toast.warning(
+        "Data hash must be a valid 64-character hex string prefixed with 0x"
+      );
       return;
     }
 
@@ -266,7 +268,7 @@ const DappPage = ({
                   <p>
                     Project Emissions:{" "}
                     {projectEmissions !== null
-                      ? `${projectEmissions.toString()} tons CO2`
+                      ? `${projectEmissions.toString()} tons CO2/kWh`
                       : "No data available"}
                   </p>
                   <p>
@@ -277,7 +279,7 @@ const DappPage = ({
                   </p>
                 </>
               ) : (
-                <p style={{ fontSize: '1.5em', color: '#ffcc00' }}>
+                <p style={{ fontSize: "1.5em", color: "#ffcc00" }}>
                   No data available. Register your project to fetch oracle data.
                 </p>
               )}
@@ -285,7 +287,7 @@ const DappPage = ({
           )}
         </>
       ) : (
-        <p style={{ fontSize: '1.5em', color: '#ffcc00' }}>
+        <p style={{ fontSize: "1.5em", color: "#ffcc00" }}>
           Please connect your wallet to interact with the Dapp.
         </p>
       )}

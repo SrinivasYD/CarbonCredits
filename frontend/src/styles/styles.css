@@ -524,13 +524,13 @@ button:hover {
   text-align: center;
   padding: 60px 20px;
   color: #ffffff;
-  background-image: url("../../public/home4.jpg"); /* Adjust the path if needed */
-  background-size: cover; /* Make sure the image covers the entire container */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevent image from repeating */
-  background-attachment: fixed; /* Keep the background fixed during scroll */
+  background-image: url("../../public/home4.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   position: relative;
-  min-height: 100vh; /* Ensure the container takes up at least the full viewport height */
+  min-height: 100vh;
 }
 
 .oracle-dashboard::before {
@@ -541,7 +541,6 @@ button:hover {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  /* Dark overlay for text contrast */
   z-index: 1;
 }
 
@@ -549,51 +548,34 @@ button:hover {
   margin: 40px 0;
   padding: 20px;
   border: 2px solid #76ff03;
-  /* Green border */
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   position: relative;
   z-index: 2;
-  /* Ensures sections are above the overlay */
 }
 
-.trusted-source-panel {
-  margin: 40px 0;
-  padding: 20px;
-  border: 2px solid #76ff03;
-  /* Green border */
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
-  position: relative;
-  z-index: 2;
-  /* Ensures sections are above the overlay */
+.input-button-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Center the content */
-}
-
-.oracle-controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* Align inputs and button to the center */
   width: 100%;
-  /* Make the width consistent */
+  margin-bottom: 20px;
 }
 
-.oracle-controls .data-input {
-  width: 60%;
-  /* Consistent width for all input fields */
+.oracle-controls .data-input,
+.input-button-wrapper .data-input {
+  width: 100%;
+  max-width: 500px;
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
   border: 1px solid #ccc;
   text-align: center;
-  /* Center text in input */
 }
 
-.oracle-controls .action-button {
+/* Adjusted button width */
+.oracle-controls .action-button,
+.input-button-wrapper .action-button {
   background-color: #76ff03;
   color: #121212;
   padding: 12px 24px;
@@ -602,15 +584,14 @@ button:hover {
   font-size: 1.2em;
   font-weight: 700;
   cursor: pointer;
+  width: 20%; /* Reduced width for buttons */
+  max-width: 300px; /* Ensure buttons don't get too large */
+  margin-top: 10px;
   transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  /* Add space above button */
-  width: 20%;
-  /* Match button width to input fields */
 }
 
-.oracle-controls .action-button:hover {
+.oracle-controls .action-button:hover,
+.input-button-wrapper .action-button:hover {
   background-color: #64dd17;
   transform: translateY(-2px);
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
@@ -619,15 +600,11 @@ button:hover {
 
 .non-trusted-message {
   font-size: 1.5em;
-  /* Increase font size for better visibility */
   color: #ffcc00;
-  /* Gold color to make the message stand out */
   margin-top: 20px;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-  /* Text shadow for better readability */
   position: relative;
   z-index: 2;
-  /* Ensure it's above the background overlay */
 }
 
 .non-trusted-message {
