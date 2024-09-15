@@ -38,7 +38,7 @@ describe("Oracle Integration with CarbonCreditNFT", function () {
     await carbonCreditNFT.waitForDeployment();
 
     // Authorize CarbonCreditNFT to interact with mock oracles
-    await projectEmissionsOracleMock.authorizeCaller(carbonCreditNFT.target);
+    // await projectEmissionsOracleMock.authorizeCaller(carbonCreditNFT.target);
   });
 
   describe("Integration with MockAverageEmissionsOracle", function () {
@@ -114,7 +114,7 @@ describe("Oracle Integration with CarbonCreditNFT", function () {
 
       // Set oracle values to simulate real scenarios
       await projectEmissionsOracleMock.addTrustedSource(owner.address);
-      await projectEmissionsOracleMock.registerProject(addr1.address);
+      // await projectEmissionsOracleMock.registerProject(addr1.address);
       await projectEmissionsOracleMock.updateProjectData(
         addr1.address,
         5000,

@@ -1,3 +1,4 @@
+ 
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
@@ -55,7 +56,7 @@ describe("CarbonCreditNFT with Project Approval", function () {
     console.log("CarbonCreditNFT deployed at:", carbonCreditNFT.target);
 
     // Authorize the CarbonCreditNFT contract to interact with the mock oracles
-    await projectEmissionsOracleMock.authorizeCaller(carbonCreditNFT.target);
+    // await projectEmissionsOracleMock.authorizeCaller(carbonCreditNFT.target);
   });
 
   describe("Deployment", function () {
@@ -238,7 +239,6 @@ describe("CarbonCreditNFT with Project Approval", function () {
     it("Should mint carbon credits for a registered project", async function () {
       // Set mock oracle responses
       await projectEmissionsOracleMock.addTrustedSource(owner.address);
-      await projectEmissionsOracleMock.registerProject(addr1.address);
       await projectEmissionsOracleMock.updateProjectData(
         addr1.address,
         5000,
@@ -261,7 +261,6 @@ describe("CarbonCreditNFT with Project Approval", function () {
 
     it("Should not mint carbon credits if energy produced is zero", async function () {
       await projectEmissionsOracleMock.addTrustedSource(owner.address);
-      await projectEmissionsOracleMock.registerProject(addr1.address);
       await projectEmissionsOracleMock.updateProjectData(addr1.address, 0, 500);
 
       await averageEmissionsOracleMock.addTrustedSource(owner.address);
@@ -278,7 +277,6 @@ describe("CarbonCreditNFT with Project Approval", function () {
 
     it("Should not mint carbon credits if project emissions are too high", async function () {
       await projectEmissionsOracleMock.addTrustedSource(owner.address);
-      await projectEmissionsOracleMock.registerProject(addr1.address);
       await projectEmissionsOracleMock.updateProjectData(
         addr1.address,
         1000,
