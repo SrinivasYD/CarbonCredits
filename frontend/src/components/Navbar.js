@@ -61,7 +61,14 @@ const Navbar = ({
               Approve Project
             </a>
           </li>
+          
         )}
+         {/* Add FAQ Link */}
+         <li>
+          <a href="/faq" target="_blank" rel="noopener noreferrer">
+            FAQ
+          </a>
+        </li>
       </ul>
       <button className="connect-wallet" onClick={handleWallet}>
         {account ? shortenAddress(account) : "Connect Wallet"}

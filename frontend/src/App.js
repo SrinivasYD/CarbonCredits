@@ -23,6 +23,7 @@ import MockAverageEmissionsOracleArtifact from "./contracts/MockAverageEmissions
 import CarbonCreditNFTArtifact from "./contracts/CarbonCreditNFT.json";
 import ProjectApprovalArtifact from "./contracts/ProjectApproval.json"; // Import ProjectApproval ABI
 import contractAddresses from "./contracts/contract-addresses.json";
+import FAQPage from "./pages/FAQPage";
 
 function App() {
   const [web3, setWeb3] = useState(null);
@@ -190,6 +191,7 @@ function AppContent({
         />
         {/* Add the Marketplace route */}
         <Route path="/marketplace" element={<MarketplacePage />} />
+        <Route path="/faq" element={<FAQPage />} /> {/* Add FAQ route */}
       </Routes>
     </div>
   );
