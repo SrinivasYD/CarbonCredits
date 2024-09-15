@@ -295,5 +295,6 @@ const MarketplacePage = () => {
     </div>
   );
 };
-// export the page
+// export the marketplace page
+
 export default MarketplacePage;
