@@ -115,6 +115,7 @@ input {
  
 
 
+ 
 .nonft {
   font-size: 18px !important;
   color: #ffffff !important;
@@ -133,6 +134,7 @@ input {
   background-color: #45a049 !important;
   transform: scale(1.05) !important;
 }
+ 
 
 
 
@@ -300,5 +302,6 @@ input {
 
 .slick-next {
   right: 1px;
+ 
 }
-
+ 
