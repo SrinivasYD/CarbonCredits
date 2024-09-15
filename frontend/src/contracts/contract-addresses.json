@@ -1,7 +1,7 @@
 {
-  "MockProjectEmissionsOracle": "0x0Bb805d16CD226476e2a104156953ACA8950caEd",
-  "MockAverageEmissionsOracle": "0xebcbC9a8eDAcA215C922f73568F42f5687044Bd1",
-  "ProjectApproval": "0x7bb57b57adca253CEC68954a27652Af9Bb26506F",
-  "CarbonCreditNFT": "0x4CA5e5770E90726dBee7a501801ca41a2f3d28aa",
-  "CarbonCreditNFTMarketplace": "0x587FE87f6902F7F9ca94C979A016550AFd118190"
+  "MockProjectEmissionsOracle": "0x4b303e099bF397feCEB3b5385CDc875cCd83631C",
+  "MockAverageEmissionsOracle": "0xe9Ea2C95Dbd6D356F645aAF2D3f4D9F15F656b74",
+  "ProjectApproval": "0xaE31C1dc50d9830932ca44c815a71184b8060E89",
+  "CarbonCreditNFT": "0x1D5fBF9d14618E5C135A83591A78F9cf0C3FAbe4",
+  "CarbonCreditNFTMarketplace": "0x36AD31a696a347befFF689a387BEc2Dc4C02eE75"
 }

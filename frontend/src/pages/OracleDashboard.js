@@ -205,21 +205,21 @@ const OracleDashboard = ({
                   value={projectAddress}
                   onChange={(e) => setProjectAddress(e.target.value)}
                   placeholder="Enter Project Owner's Wallet Address"
-                  className="data-input"
+                  className="data-input1"
                 />
                 <input
                   type="number"
                   value={energyProduced}
                   onChange={(e) => setEnergyProduced(e.target.value)}
                   placeholder="Energy Produced (kWh)"
-                  className="data-input"
+                  className="data-input1"
                 />
                 <input
                   type="number"
                   value={projectEmissions}
                   onChange={(e) => setProjectEmissions(e.target.value)}
                   placeholder="Project Emissions (gCO2/kWh)"
-                  className="data-input"
+                  className="data-input1"
                 />
                 <button
                   onClick={handleUpdateOracleData}
