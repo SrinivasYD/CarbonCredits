@@ -1,41 +1,57 @@
+.marketplace-container {
+  padding: 20px;
+}
+
+.nft-section {
+  margin-bottom: 40px;
+}
+
+.nft-scrollbar {
+  display: flex;
+  flex-wrap: nowrap; /* Ensures items do not wrap to the next line */
+  overflow-x: auto;
+  scrollbar-width: thin; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.nft-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+
+.nft-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
 .nft-card {
-  position: relative;
-  width: 250px;
-  height: 350px;
+  flex: 0 0 auto; /* Prevents shrinking and ensures cards stay in one row */
+  width: 200px;
+  height: 340px; /* Height for each card */
+  margin-right: 10px;
+  background-color: white;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
 }
 
 .nft-card img {
   width: 100%;
-  height: 100%;
+  height: 60%;
   object-fit: cover;
-  border-radius: 10px;
 }
 
 .nft-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark background with transparency */
-  color: white;
+  flex-grow: 1;
   padding: 10px;
   text-align: center;
 }
 
-.nft-info h3 {
-  margin: 0;
-  font-size: 18px;
-}
-
-.nft-info p {
-  margin: 5px 0;
-}
-
-button {
+.nft-card .buy-button {
+  /* More specific selector for Buy NFT button */
   background-color: #007bff;
   color: white;
   border: none;
@@ -43,11 +59,30 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 10px;
+  margin-top: auto; /* Keeps button at the bottom */
+  width: 100%;
 }
 
-button:hover {
+.nft-card .buy-button:hover {
   background-color: #0056b3;
+}
+
+.wallet-button {
+  /* Specific class for wallet connect button */
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.wallet-button:hover {
+  background-color: #218838;
 }
 
 input {
