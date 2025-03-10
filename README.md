@@ -1,4 +1,3 @@
- 
 # Carbon Credit Marketplace
 
 ## Overview
@@ -20,7 +19,7 @@ carbon-credit-platform/
 │   ├── public/
 │   ├── src/
 │   ├── package.json
-│   ├── .env  
+│   ├── .env
 |   └── ...
 │
 ├── smart-contracts/          # Smart Contracts (Hardhat)
@@ -127,5 +126,7 @@ To run the tests for the smart contracts, navigate to the `smart-contracts` dire
 cd smart-contracts
 npx hardhat test
 ```
- 
- 
+
+### 📽️ Demo: Carbon Credits NFT Marketplace
+
+🔗 [Watch the Demo Video](https://drive.google.com/file/d/18Gz9BzF9v_jQi8Vlm-SoCvozb5VEnPj9/view?usp=drive_link)
