@@ -131,19 +131,19 @@ npx hardhat test
 
 ### 🖼️ **Step 1: Project Registration**
 
-![Project Registration](assets/step 1.png)
+![Project Registration](https://github.com/SrinivasYD/CarbonCredits/blob/7a91df0f02463449580562dbe11b2ad5d4d6ed85/assets/step%201.png)
 
 ### 🖼️ **Step 2: Project Approval & Dapp Registration**
 
-![Project Approval & Dapp Registration](assets/step 2.png)
+![Project Approval & Dapp Registration](https://github.com/SrinivasYD/CarbonCredits/blob/7a91df0f02463449580562dbe11b2ad5d4d6ed85/assets/step%202.png)
 
 ### 🖼️ **Step 3: Oracle Updation & NFT Minting**
 
-![Oracle Updation & NFT Minting](assets/step 3.png)
+![Oracle Updation & NFT Minting](https://github.com/SrinivasYD/CarbonCredits/blob/7a91df0f02463449580562dbe11b2ad5d4d6ed85/assets/step%203.png)
 
 ### 🖼️ **Step 4: NFT Marketplace Interaction**
 
-![NFT Marketplace Interaction](assets/step 4.png)
+![NFT Marketplace Interaction](https://github.com/SrinivasYD/CarbonCredits/blob/7a91df0f02463449580562dbe11b2ad5d4d6ed85/assets/step%204.png)
 
 ### 📽️ Demo: Carbon Credits NFT Marketplace
 
