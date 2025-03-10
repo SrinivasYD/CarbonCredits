@@ -6,7 +6,7 @@ const port = 5000
 
 require('./config/db') // Connect to MongoDB
 
-// Importing your Blockchain Controller
+// Importing Blockchain Controller
 const {
   fetchAndSyncEvents,
   setupEventListeners

@@ -9,7 +9,6 @@ const provider = new ethers.providers.WebSocketProvider(
   process.env.WEB3_PROVIDER
 )
 
-// Set the correct path for the contract directory
 const contractsDir = path.join(
   __dirname,
   '..',
@@ -194,7 +193,7 @@ function setupMintingEventListener() {
         const nft = new MintedNFT({
           owner,
           recipient,
-          numberOfTokens: numberOfTokens.toString(), // Ensure consistency in storage
+          numberOfTokens: numberOfTokens.toString(),
           timestamp: new Date(timestamp.toNumber() * 1000) // Convert UNIX timestamp to JS date
         })
         await nft.save()
