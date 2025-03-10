@@ -145,6 +145,8 @@ npx hardhat test
 
 ![NFT Marketplace Interaction](https://github.com/SrinivasYD/CarbonCredits/blob/7a91df0f02463449580562dbe11b2ad5d4d6ed85/assets/step%204.png)
 
+## Working Demo of the Project
+
 ### 📽️ Demo: Carbon Credits NFT Marketplace
 
 🔗 [Watch the Demo Video](https://drive.google.com/file/d/18Gz9BzF9v_jQi8Vlm-SoCvozb5VEnPj9/view)
