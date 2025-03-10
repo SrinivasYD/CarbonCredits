@@ -127,6 +127,24 @@ cd smart-contracts
 npx hardhat test
 ```
 
+## Sequence Diagram of the Project
+
+### 🖼️ **Step 1: Project Registration**
+
+![Project Registration](assets/step 1.png)
+
+### 🖼️ **Step 2: Project Approval & Dapp Registration**
+
+![Project Approval & Dapp Registration](assets/step 2.png)
+
+### 🖼️ **Step 3: Oracle Updation & NFT Minting**
+
+![Oracle Updation & NFT Minting](assets/step 3.png)
+
+### 🖼️ **Step 4: NFT Marketplace Interaction**
+
+![NFT Marketplace Interaction](assets/step 4.png)
+
 ### 📽️ Demo: Carbon Credits NFT Marketplace
 
 🔗 [Watch the Demo Video](https://drive.google.com/file/d/18Gz9BzF9v_jQi8Vlm-SoCvozb5VEnPj9/view)
